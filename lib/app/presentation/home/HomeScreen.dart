@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app/presentation/components/AlertDialog.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
+import 'package:todo_app/app/presentation/home/TaskList.dart';
+import 'package:todo_app/app/domain/model/Task.dart';
+import '../components/TaskModal.dart';
+import '../components/TextTitle.dart';
+import 'TaskListPlaceholder.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,42 +14,49 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> tasks = [];
+  final List<Task> tasks = [
+    Task("Prueba 1 "),
+    Task("Prueba 2 Prueba 2 Prueba"),
+    Task("Prueba 3 Prueba 3 Prueba 3 Prueba 3 Prueba 3 Prueba 3"),
+  ];
 
-  void _addTask() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const CustomAlertDialog();
-      },
-    );
+  void _showNewTaskModal() {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (_) => TaskModal(onAcceptPressed: (Task task) {
+              _addTask(task);
+            }));
+  }
+
+  void _addTask(Task task) {
+    setState(() {
+      tasks.add(task);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task List'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _addTask,
-          ),
-        ],
+        title: const TextTitle("Task List"),
+        backgroundColor: primary,
       ),
       body: tasks.isEmpty
-          ? const Center(child: Text('No tasks added yet'))
-          : ListView.builder(
-              itemCount: tasks.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(tasks[index]),
-                );
+          ? const TaskListPlaceholder()
+          : TaskList(
+              tasks,
+              onTaskDoneChange: (Task task) {
+                print(task.done);
+                setState(() {
+                  task.done = !task.done;
+                });
               },
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addTask,
-        child: Icon(Icons.add),
+        onPressed: _showNewTaskModal,
+        backgroundColor: primary,
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app/presentation/home/HomeScreen.dart';
+import 'package:todo_app/app/presentation/theme/colors.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -24,9 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Text(
           'Welcome to TodoApp',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
+      backgroundColor: primary,
     );
   }
 }

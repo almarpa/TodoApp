@@ -1,15 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomAlertDialog extends StatefulWidget {
-  const CustomAlertDialog({super.key});
+class TaskDialog extends StatefulWidget {
+  const TaskDialog({super.key, required this.onAcceptPressed});
+
+  final String onAcceptPressed;
 
   @override
-  _CustomAlertDialogState createState() => _CustomAlertDialogState();
+  State<TaskDialog> createState() => _TaskDialogState();
 }
 
-class _CustomAlertDialogState extends State<CustomAlertDialog> {
-  void _addTask() {}
+class _TaskDialogState extends State<TaskDialog> {
+  String description = "";
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
       title: const Text('Add New Task'),
       content: TextField(
         onChanged: (value) {
-          // newTask = value;
+          description = value;
         },
         decoration: const InputDecoration(hintText: 'Enter task description'),
       ),
@@ -30,14 +31,10 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
         ),
         TextButton(
           onPressed: () {
-            // if (newTask.isNotEmpty) {
-            //   setState(() {
-            //     tasks.add(newTask);
-            //   });
-            // }
+            widget.onAcceptPressed;
             Navigator.of(context).pop();
           },
-          child: const Text('Add'),
+          child: const Text('Accept'),
         ),
       ],
     );

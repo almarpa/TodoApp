@@ -13,14 +13,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TodoApp',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: primary),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: primary, primary: primary, secondary: primary),
+
+          // SCAFFOLD
           scaffoldBackgroundColor: backgroundColor,
+
+          // TEXT
           textTheme: Theme.of(context).textTheme.apply(
               fontFamily: 'Poppins',
               bodyColor: textColor,
-              displayColor: textColor)),
-      home: SplashScreen(),
+              displayColor: textColor),
+
+          // BOTTOM SHEET
+          bottomSheetTheme:
+              const BottomSheetThemeData(backgroundColor: Colors.transparent),
+
+          // ELEVATED BUTTON
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                  foregroundColor: Colors.white,
+                  backgroundColor: primary,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontSize: 18, fontWeight: FontWeight.w700)))),
+      home: const SplashScreen(),
     );
   }
 }
