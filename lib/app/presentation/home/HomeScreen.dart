@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const TaskListPlaceholder();
           } else {
             return TaskList(
-              snapshot.data ?? List.empty(),
+              snapshot.data!,
               onTaskDoneChange: (Task task) {
                 taskRepository.saveTasks(snapshot.data!);
                 task.done = !task.done;
