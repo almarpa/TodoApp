@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/app/data/repository/TaskRepository.dart';
+import 'package:todo_app/app/data/repository/impl/TaskRepositoryImpl.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
 import 'package:todo_app/app/presentation/home/TaskList.dart';
 import 'package:todo_app/app/domain/model/Task.dart';
@@ -14,11 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Task> tasks = [
-    Task("Prueba 1 "),
-    Task("Prueba 2 Prueba 2 Prueba"),
-    Task("Prueba 3 Prueba 3 Prueba 3 Prueba 3 Prueba 3 Prueba 3"),
-  ];
+  final TaskRepository taskRepository = TaskRepositoryImpl();
 
   void _showNewTaskModal() {
     showModalBottomSheet(
@@ -31,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _addTask(Task task) {
     setState(() {
-      tasks.add(task);
+      taskRepository.addTask(task);
     });
   }
 
@@ -42,17 +40,25 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const TextTitle("Task List"),
         backgroundColor: primary,
       ),
-      body: tasks.isEmpty
-          ? const TaskListPlaceholder()
-          : TaskList(
-              tasks,
+      body: FutureBuilder<List<Task>>(
+        future: taskRepository.getTasks(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.data?.isEmpty == true) {
+            return const TaskListPlaceholder();
+          } else {
+            return TaskList(
+              snapshot.data ?? List.empty(),
               onTaskDoneChange: (Task task) {
-                print(task.done);
-                setState(() {
-                  task.done = !task.done;
-                });
+                taskRepository.saveTasks(snapshot.data!);
+                task.done = !task.done;
+                setState(() {});
               },
-            ),
+            );
+          }
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showNewTaskModal,
         backgroundColor: primary,

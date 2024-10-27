@@ -15,14 +15,13 @@ class TaskList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              child: ListView.separated(
-                  itemCount: tasks.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
-                  itemBuilder: (context, index) =>
-                      _TaskItem(tasks[index], onTap: () {
-                        onTaskDoneChange(tasks[index]);
-                      })),
-            ),
+                child: ListView.separated(
+                    itemCount: tasks.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 10),
+                    itemBuilder: (context, index) =>
+                        _TaskItem(tasks[index], onTap: () {
+                          onTaskDoneChange(tasks[index]);
+                        })))
           ],
         ));
   }
