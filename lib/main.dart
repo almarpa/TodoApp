@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app/presentation/theme/colors.dart';
 import 'package:todo_app/app/presentation/splash/SplashScreen.dart';
+import 'package:todo_app/app/presentation/theme/colors.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/app/presentation/components/TextTitle.dart';
+import 'package:todo_app/app/presentation/task_list/task_provider.dart';
 
 import '../../domain/model/Task.dart';
 
 class TaskModal extends StatefulWidget {
-  const TaskModal({super.key, required this.onAcceptPressed});
-
-  final void Function(Task task) onAcceptPressed;
+  const TaskModal({super.key});
 
   @override
   State<TaskModal> createState() => _TaskModalState();
@@ -53,7 +53,8 @@ class _TaskModalState extends State<TaskModal> {
             ElevatedButton(
               onPressed: () {
                 if (_controller.text.isNotEmpty) {
-                  widget.onAcceptPressed(Task(_controller.text));
+                  final task = Task(_controller.text);
+                  context.read<TaskProvider>().addNewTask(task);
                   Navigator.of(context).pop();
                 }
               },

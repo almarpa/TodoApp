@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app/presentation/home/HomeScreen.dart';
+import 'package:todo_app/app/presentation/task_list/task_list_screen.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const TaskListScreen()),
       );
     });
   }
