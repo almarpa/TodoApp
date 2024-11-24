@@ -1,4 +1,4 @@
-package com.amarcopa.todo_app
+package com.almarpa.todo
 
 import io.flutter.embedding.android.FlutterActivity
 

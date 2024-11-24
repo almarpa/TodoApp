@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "351145816976",
+    "project_id": "todoapp-16793",
+    "storage_bucket": "todoapp-16793.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351145816976:android:05b094bfc9890ae3a8f915",
+        "android_client_info": {
+          "package_name": "com.almarpa.todo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351145816976-hl0v6g9qd6111r3chv6a1kadlbcfgc1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmLLBiitO9YkH424Q5wdInxR72cbberFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351145816976-hl0v6g9qd6111r3chv6a1kadlbcfgc1r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "351145816976-j7hfpkl6o64m1ld11kn2dp3t0e1e54fo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.almarpa.todo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
