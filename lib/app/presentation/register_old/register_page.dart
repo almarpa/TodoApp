@@ -6,7 +6,7 @@ import 'package:todo_app/app/presentation/login_old/login_page.dart';
 
 import '../common/image_picker.dart';
 import '../common/validators.dart';
-import '../components/input_decoration_widget.dart';
+import '../widgets/input_decoration_widget.dart';
 import '../theme/colors.dart';
 
 class RegisterScreen extends StatefulWidget {

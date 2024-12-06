@@ -495,6 +495,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.almarpa.todo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -680,6 +681,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.almarpa.todo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -704,6 +706,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.almarpa.todo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -4,8 +4,8 @@ import 'package:todo_app/app/presentation/screens/task_list/task_list_placeholde
 import 'package:todo_app/app/presentation/screens/task_list/task_provider.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
 import 'package:todo_app/app/data/entities/task_entity.dart';
-import '../../components/task_modal.dart';
-import '../../components/text_title.dart';
+import '../../widgets/task_modal.dart';
+import '../../widgets/text_title.dart';
 import 'package:provider/provider.dart';
 
 class TaskListScreen extends StatelessWidget {

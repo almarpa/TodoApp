@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/app/presentation/login_old/login_page.dart';
 import 'package:todo_app/app/presentation/screens/task_list/task_list_screen.dart';
 
-import '../../components/circular_progress_widget.dart';
+import '../../widgets/circular_progress_widget.dart';
 import '../../login_old/login_provider.dart';
 import '../../register_old/register_page.dart';
 

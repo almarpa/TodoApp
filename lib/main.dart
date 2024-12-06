@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/app/data/repository/impl/user_repository_impl.dart';
 import 'package:todo_app/my_app.dart';
 import 'app/presentation/common/firebase_service.dart';
-import 'app/data/repository/user_repository.dart';
 
 void main() async {
   Intl.defaultLocale = 'es_ES';
