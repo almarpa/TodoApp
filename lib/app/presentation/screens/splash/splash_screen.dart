@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/app/presentation/common/extensions.dart';
-import 'package:todo_app/app/presentation/login/login_page.dart';
-import 'package:todo_app/app/presentation/task_list/task_list_screen.dart';
+import 'package:todo_app/app/presentation/login_old/login_page.dart';
+import 'package:todo_app/app/presentation/screens/task_list/task_list_screen.dart';
 
-import '../components/circular_progress_widget.dart';
-import '../login/login_provider.dart';
-import '../register/register_page.dart';
+import '../../components/circular_progress_widget.dart';
+import '../../login_old/login_provider.dart';
+import '../../register_old/register_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

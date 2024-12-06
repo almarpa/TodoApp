@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:todo_app/app/data/repository/TaskRepository.dart';
-import 'package:todo_app/app/data/repository/impl/TaskRepositoryImpl.dart';
-import 'package:todo_app/app/domain/model/Task.dart';
+import 'package:todo_app/app/data/repository/task_repository.dart';
+import 'package:todo_app/app/data/repository/impl/task_repository_impl.dart';
+import 'package:todo_app/app/data/entities/task_entity.dart';
 
 class TaskProvider extends ChangeNotifier {
   List<Task> _taskList = [];

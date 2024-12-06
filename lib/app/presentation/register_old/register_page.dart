@@ -2,16 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:todo_app/app/presentation/login/form_provider.dart';
-import 'package:todo_app/app/presentation/login/login_page.dart';
-import 'package:todo_app/app/presentation/register/register_provider.dart';
+import 'package:todo_app/app/presentation/login_old/login_page.dart';
 
 import '../common/image_picker.dart';
-import '../common/snackbar.dart';
 import '../common/validators.dart';
-import '../components/button_decoration_widget.dart';
-import '../components/circular_progress_widget.dart';
 import '../components/input_decoration_widget.dart';
 import '../theme/colors.dart';
 
@@ -31,32 +25,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void submitRegister() async {
-    final formProvider = Provider.of<FormProvider>(context, listen: false);
-    final registerProvider =
-        Provider.of<RegisterProvider>(context, listen: false);
+    // if (formProvider.formKeys.currentState!.validate()) {
+    //   formProvider.setLoading(true);
 
-    if (formProvider.formKeys.currentState!.validate()) {
-      formProvider.setLoading(true);
-
-      await registerProvider.registerUser(
-          username: formProvider.usernameController.text,
-          email: formProvider.emailController.text,
-          password: formProvider.passwordController.text,
-          birth: formProvider.birthController.text,
-          age: formProvider.birthController.text,
-          image: image,
-          onSuccess: () {
-            formProvider.setLoading(false);
-            showSnackbar(context, "Revise su correo para verificar su cuenta");
-            navigateToLoginScreen();
-          },
-          onError: (error) {
-            formProvider.setLoading(false);
-            showSnackbar(context, error);
-          });
-    } else {
-      formProvider.setLoading(false);
-    }
+    //   // await registerProvider.registerUser(
+    //   //     username: formProvider.usernameController.text,
+    //   //     email: formProvider.emailController.text,
+    //   //     password: formProvider.passwordController.text,
+    //   //     birth: formProvider.birthController.text,
+    //   //     age: formProvider.birthController.text,
+    //   //     image: image,
+    //   //     onSuccess: () {
+    //   //       formProvider.setLoading(false);
+    //   //       showSnackbar(context, "Revise su correo para verificar su cuenta");
+    //   //       navigateToLoginScreen();
+    //   //     },
+    //   //     onError: (error) {
+    //   //       formProvider.setLoading(false);
+    //   //       showSnackbar(context, error);
+    //   //     });
+    // } else {
+    //   formProvider.setLoading(false);
+    // }
   }
 
   void openImagePicker() async {
@@ -72,8 +62,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final formProvider = Provider.of<FormProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundColor,
@@ -87,7 +75,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
       body: Form(
-        key: formProvider.formKeys,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -114,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                 ),
                 const SizedBox(height: 20),
-                InputDecorationWidget(
+                /*InputDecorationWidget(
                   hintText: "Nombre de usuario",
                   labelText: "Ingrese su nombre de usuario",
                   controller: formProvider.usernameController,
@@ -174,7 +161,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           )),
                     ),
                   ],
-                ),
+                ),*/
               ],
             ),
           ),
@@ -183,11 +170,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget getBirth(BuildContext context, FormProvider formProvider) {
+  Widget getBirth(BuildContext context) {
     return InputDecorationWidget(
         hintText: "dd/mm/yyyy",
         labelText: "Ingrese su fecha de nacimiento",
-        controller: formProvider.birthController,
+        //controller: formProvider.birthController,
         keyboardType: TextInputType.datetime,
         suffixIcon: const Icon(Icons.calendar_today_outlined),
         validator: Validators.birthValidator,
@@ -221,7 +208,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if (pickedData != null) {
             String formatedData = DateFormat('dd/MM/yyyy').format(pickedData);
             setState(() {
-              formProvider.birthController.text = formatedData;
+              //formProvider.birthController.text = formatedData;
             });
           }
         });

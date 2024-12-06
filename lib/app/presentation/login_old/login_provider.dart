@@ -2,14 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../data/repository/LoginRepository.dart';
-import '../../data/repository/impl/LoginRepositoryImpl.dart';
-
 enum AuthStatus { notAuthentication, checking, authenticated }
 
 class LoginProvider extends ChangeNotifier {
-  final LoginRepository loginRepository = LoginRepositoryImpl();
-
   AuthStatus authStatus = AuthStatus.notAuthentication;
 
   Future<dynamic> loginUser({
@@ -22,8 +17,8 @@ class LoginProvider extends ChangeNotifier {
       authStatus = AuthStatus.checking;
       notifyListeners();
 
-      await loginRepository.loginUser(
-          usernameOrEmail, password, onSuccess, onError);
+      // await loginRepository.loginUser(
+      //     usernameOrEmail, password, onSuccess, onError);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         onError('Usuario o contraseña incorrecta.');
@@ -36,8 +31,6 @@ class LoginProvider extends ChangeNotifier {
   }
 
   Future<dynamic> getUserData(String email) async {
-    await loginRepository.getUserData(email);
+    //await loginRepository.getUserData(email);
   }
-
-  // void checkAuthState() {}
 }

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/app/presentation/login/form_provider.dart';
-import 'package:todo_app/app/presentation/register/register_page.dart';
+import 'package:todo_app/app/presentation/register_old/register_page.dart';
 
 import '../common/snackbar.dart';
-import '../common/validators.dart';
-import '../components/button_decoration_widget.dart';
-import '../components/circular_progress_widget.dart';
-import '../components/input_decoration_widget.dart';
-import '../task_list/task_list_screen.dart';
+import '../screens/task_list/task_list_screen.dart';
 import '../theme/colors.dart';
 import 'login_provider.dart';
 
@@ -31,26 +26,25 @@ class _LoginScreenState extends State<LoginScreen> {
     context,
   ) async {
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
-    final formProvider = Provider.of<FormProvider>(context, listen: false);
 
-    if (formProvider.formKeys.currentState!.validate()) {
-      formProvider.setLoading(true);
+    // if (formProvider.formKeys.currentState!.validate()) {
+    //   formProvider.setLoading(true);
 
-      loginProvider.loginUser(
-        usernameOrEmail: usernameOrEmail.toLowerCase(),
-        password: password,
-        onSuccess: (userData) async {
-          formProvider.setLoading(false);
-          navigateToHomeScreen(context, userData);
-        },
-        onError: (String error) {
-          formProvider.setLoading(false);
-          manageError(error, context);
-        },
-      );
-    } else {
-      formProvider.setLoading(false);
-    }
+    //   loginProvider.loginUser(
+    //     usernameOrEmail: usernameOrEmail.toLowerCase(),
+    //     password: password,
+    //     onSuccess: (userData) async {
+    //       formProvider.setLoading(false);
+    //       navigateToHomeScreen(context, userData);
+    //     },
+    //     onError: (String error) {
+    //       formProvider.setLoading(false);
+    //       manageError(error, context);
+    //     },
+    //   );
+    // } else {
+    //   formProvider.setLoading(false);
+    // }
   }
 
   void manageError(String error, context) {
@@ -98,8 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final formProvider = Provider.of<FormProvider>(context);
-
     return Scaffold(
       body: Column(
         children: [
@@ -124,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          SingleChildScrollView(
+          /*SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Form(
@@ -193,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
       resizeToAvoidBottomInset: false,

@@ -1,4 +1,4 @@
-import 'package:todo_app/app/domain/model/Task.dart';
+import 'package:todo_app/app/data/entities/task_entity.dart';
 
 abstract class TaskRepository {
   Future<bool> addTask(Task task);

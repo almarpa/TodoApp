@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app/presentation/task_list/task_list.dart';
-import 'package:todo_app/app/presentation/task_list/task_list_placeholder.dart';
-import 'package:todo_app/app/presentation/task_list/task_provider.dart';
+import 'package:todo_app/app/presentation/screens/task_list/task_list.dart';
+import 'package:todo_app/app/presentation/screens/task_list/task_list_placeholder.dart';
+import 'package:todo_app/app/presentation/screens/task_list/task_provider.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
-import 'package:todo_app/app/domain/model/Task.dart';
-import '../components/task_modal.dart';
-import '../components/text_title.dart';
+import 'package:todo_app/app/data/entities/task_entity.dart';
+import '../../components/task_modal.dart';
+import '../../components/text_title.dart';
 import 'package:provider/provider.dart';
 
 class TaskListScreen extends StatelessWidget {

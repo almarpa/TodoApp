@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../domain/model/Task.dart';
-import '../TaskRepository.dart';
+import '../../entities/task_entity.dart';
+import '../task_repository.dart';
 
 class TaskRepositoryImpl extends TaskRepository {
   @override
