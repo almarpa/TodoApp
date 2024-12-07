@@ -17,6 +17,6 @@ class FirebaseService {
     // ));
 
     await _firebaseMessaging.requestPermission();
-    token = await _firebaseMessaging.getToken();
+    // token = await _firebaseMessaging.getToken();
   }
 }
