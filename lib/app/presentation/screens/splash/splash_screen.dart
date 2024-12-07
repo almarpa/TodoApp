@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app/presentation/login_old/login_page.dart';
-import 'package:todo_app/app/presentation/screens/task_list/task_list_screen.dart';
+import 'package:todo_app/app/presentation/screens/home/home_screen.dart';
 
 import '../../widgets/circular_progress_widget.dart';
 import '../../login_old/login_provider.dart';
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => const TaskListScreen(
+            builder: (context) => const HomeScreen(
                 // TODO: userData: userData
                 )));
   }
