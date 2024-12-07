@@ -4,6 +4,7 @@ import 'package:todo_app/app/presentation/screens/sign_in/sign_in_screen.dart';
 import 'package:todo_app/app/presentation/screens/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/app/presentation/theme/colors.dart';
 
 import '../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
@@ -29,45 +30,31 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Stack(
             children: [
-              Align(
-                alignment: const AlignmentDirectional(20, -1.2),
-                child: Container(
-                  height: MediaQuery.of(context).size.width,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.tertiary),
-                ),
-              ),
-              Align(
-                alignment: const AlignmentDirectional(-2.7, -1.2),
-                child: Container(
-                  height: MediaQuery.of(context).size.width / 1.3,
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.secondary),
-                ),
-              ),
-              Align(
-                alignment: const AlignmentDirectional(2.7, -1.2),
-                child: Container(
-                  height: MediaQuery.of(context).size.width / 1.3,
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.primary),
-                ),
-              ),
+              positionedCircles(context),
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
                 child: Container(),
+              ),
+              const Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 80.0),
+                  child: Text(
+                    'I \n Have  \n   A \n     Plan',
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                      color: white,
+                      letterSpacing: 5,
+                    ),
+                  ),
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -134,6 +121,54 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+Widget positionedCircles(BuildContext context) {
+  return Stack(
+    children: [
+      Align(
+        alignment: const AlignmentDirectional(20, -1.2),
+        child: CircleContainer(
+          diameter: MediaQuery.of(context).size.width,
+          color: Theme.of(context).colorScheme.tertiary,
+        ),
+      ),
+      Align(
+        alignment: const AlignmentDirectional(-2.7, -1.2),
+        child: CircleContainer(
+          diameter: MediaQuery.of(context).size.width / 1.3,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+      Align(
+        alignment: const AlignmentDirectional(2.7, -1.2),
+        child: CircleContainer(
+          diameter: MediaQuery.of(context).size.width / 1.3,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+    ],
+  );
+}
+
+class CircleContainer extends StatelessWidget {
+  final double diameter;
+  final Color color;
+
+  const CircleContainer(
+      {super.key, required this.diameter, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: diameter,
+      width: diameter,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color,
       ),
     );
   }

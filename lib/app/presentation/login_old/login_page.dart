@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/app/presentation/register_old/register_page.dart';
 
 import '../common/snackbar.dart';
-import '../screens/task_list/task_list_screen.dart';
 import '../theme/colors.dart';
 import 'login_provider.dart';
 
@@ -74,14 +73,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void hidKeyboard(context) {
     FocusScope.of(context).unfocus();
-  }
-
-  void navigateToHomeScreen(context, userData) {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return const TaskListScreen(
-          // TODO: userData: userData,
-          );
-    }));
   }
 
   void navigateToRegisterScreen(context) {

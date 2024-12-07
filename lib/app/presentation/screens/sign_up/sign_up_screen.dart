@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/app/domain/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/app/presentation/common/validators.dart';
 
 import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
 import '../../widgets/my_text_field.dart';
@@ -59,15 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: false,
                     keyboardType: TextInputType.emailAddress,
                     prefixIcon: const Icon(CupertinoIcons.mail_solid),
-                    validator: (val) {
-                      if (val!.isEmpty) {
-                        return 'Please fill in this field';
-                      } else if (!RegExp(r'^[\w-\.]+@([\w-]+.)+[\w-]{2,4}$')
-                          .hasMatch(val)) {
-                        return 'Please enter a valid email';
-                      }
-                      return null;
-                    }),
+                    validator: (val) => Validators.emailValidator(val)),
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -140,16 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                       icon: Icon(iconPassword),
                     ),
-                    validator: (val) {
-                      if (val!.isEmpty) {
-                        return 'Please fill in this field';
-                      } else if (!RegExp(
-                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^]).{8,}$')
-                          .hasMatch(val)) {
-                        return 'Please enter a valid password';
-                      }
-                      return null;
-                    }),
+                    validator: (val) => Validators.passwordValidator(val)),
               ),
               const SizedBox(height: 10),
               Row(
@@ -212,14 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: false,
                     keyboardType: TextInputType.name,
                     prefixIcon: const Icon(CupertinoIcons.person_fill),
-                    validator: (val) {
-                      if (val!.isEmpty) {
-                        return 'Please fill in this field';
-                      } else if (val.length > 30) {
-                        return 'Name too long';
-                      }
-                      return null;
-                    }),
+                    validator: (val) => Validators.userNameValidator(val)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               !signUpRequired

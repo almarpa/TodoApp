@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app/presentation/widgets/text_title.dart';
-import 'package:todo_app/app/presentation/screens/task_list/task_provider.dart';
+import 'package:todo_app/app/presentation/screens/home/task_provider.dart';
 
 import '../../data/entities/task_entity.dart';
 

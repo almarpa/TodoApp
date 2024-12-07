@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/app/presentation/common/validators.dart';
 
 import '../../widgets/my_text_field.dart';
 import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
@@ -16,6 +17,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   bool signInRequired = false;
   IconData iconPassword = CupertinoIcons.eye_fill;
   bool obscurePassword = true;
@@ -25,20 +27,25 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) {
-        if (state is SignInSuccess) {
-          setState(() {
-            signInRequired = false;
-          });
-        } else if (state is SignInProcess) {
-          setState(() {
-            signInRequired = true;
-          });
-        } else if (state is SignInFailure) {
-          setState(() {
-            signInRequired = false;
-            _errorMsg = 'Invalid email or password';
-          });
-        }
+        setState(() {
+          switch (state.runtimeType) {
+            case SignInSuccess _:
+              signInRequired = false;
+              break;
+
+            case SignInProcess _:
+              signInRequired = true;
+              break;
+
+            case SignInFailure _:
+              signInRequired = false;
+              _errorMsg = 'Usuario o contraseña incorrecto';
+              break;
+
+            default:
+              break;
+          }
+        });
       },
       child: Form(
           key: _formKey,
@@ -54,15 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       keyboardType: TextInputType.emailAddress,
                       prefixIcon: const Icon(CupertinoIcons.mail_solid),
                       errorMsg: _errorMsg,
-                      validator: (val) {
-                        if (val!.isEmpty) {
-                          return 'Please fill in this field';
-                        } else if (!RegExp(r'^[\w-\.]+@([\w-]+.)+[\w-]{2,4}$')
-                            .hasMatch(val)) {
-                          return 'Please enter a valid email';
-                        }
-                        return null;
-                      })),
+                      validator: (val) => Validators.emailValidator(val))),
               const SizedBox(height: 10),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -73,16 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   keyboardType: TextInputType.visiblePassword,
                   prefixIcon: const Icon(CupertinoIcons.lock_fill),
                   errorMsg: _errorMsg,
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return 'Please fill in this field';
-                    } else if (!RegExp(
-                            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^]).{8,}$')
-                        .hasMatch(val)) {
-                      return 'Please enter a valid password';
-                    }
-                    return null;
-                  },
+                  validator: (val) => Validators.passwordValidator(val),
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {

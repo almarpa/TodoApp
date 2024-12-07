@@ -1,54 +1,48 @@
 class Validators {
   static String? emailValidator(String? value) {
     if (value!.isEmpty) {
-      return 'El email es requerido';
+      return 'El email es obligatorio';
     }
-    if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
-      return 'Porfavor ingrese un email valido';
+    if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(value)) {
+      return 'Porfavor introduce un email válido';
     }
+
     return null;
   }
 
   static String? passwordValidator(String? value) {
     if (value!.isEmpty) {
-      return 'La contraseña es requerida';
+      return 'La contraseña es obligatoria';
     }
-    if (value.length < 6) {
-      return 'La contraseña debe tener al menos 4 caracteres';
-    }
-    return null;
-  }
-
-  static String? emailOrUser(String? value) {
-    if (value!.isEmpty) {
-      return 'El email o usuario es requerido';
-    }
-
-    if (value.contains(' ')) {
-      return 'El email o usuario no puede contener espacios';
+    if (!RegExp(
+            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^]).{8,}$')
+        .hasMatch(value)) {
+      return 'Porfavor introduce una contraseña válida';
     }
 
     return null;
   }
 
-  static String? validateUsername(String? value) {
+  static String? userNameValidator(String? value) {
     if (value!.isEmpty) {
-      return 'El usuario es requerido';
-    }
-    if (value.contains(' ')) {
+      return 'El usuario es obligatorio';
+    } else if (value.contains(' ')) {
       return 'El usuario no puede contener espacios';
+    } else if (value.length > 30) {
+      return 'El usuario es demasiado largo';
     }
     return null;
   }
 
   static String? birthValidator(value) {
     if (value == null || value.isEmpty) {
-      return 'Ingrese tu fecha de nacimiento';
+      return 'Introduce tu fecha de nacimiento';
     }
 
     final dateRegex = RegExp(r'^\d{2}/\d{2}/\d{4}$');
     if (!dateRegex.hasMatch(value)) {
-      return 'Ingrese una fecha válida en formato DD/MM/AAAA';
+      return 'Introduce una fecha válida en formato DD/MM/AAAA';
     }
 
     final parts = value.split('/');
@@ -57,7 +51,7 @@ class Validators {
     final year = int.tryParse(parts[2]);
 
     if (day == null || month == null || year == null) {
-      return 'Ingrese una fecha válida en formato DD/MM/AAAA';
+      return 'Introduce una fecha válida en formato DD/MM/AAAA';
     }
 
     if (day < 1 || day > 31) {
@@ -69,7 +63,7 @@ class Validators {
     }
 
     if (year < 1900 || year > DateTime.now().year) {
-      return 'Ingrese un año válido';
+      return 'Introduce un año válido';
     }
 
     // must be legal age

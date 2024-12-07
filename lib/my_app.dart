@@ -2,7 +2,7 @@ import 'package:todo_app/app/presentation/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:todo_app/app/presentation/screens/home/welcome_screen.dart';
+import 'package:todo_app/app/presentation/screens/welcome/welcome_screen.dart';
 import 'package:todo_app/app/presentation/screens/home/home_screen.dart';
 import 'package:todo_app/app/presentation/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:todo_app/app/presentation/blocs/authentication_bloc/authentication_bloc.dart';
@@ -35,7 +35,7 @@ class MyAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'TodoApp',
+        title: 'IHaveAPlan',
         debugShowCheckedModeBanner: false,
         home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
@@ -52,18 +52,17 @@ class MyAppView extends StatelessWidget {
         }),
         theme: ThemeData(
             colorScheme: const ColorScheme.light(
-                background: Colors.white,
-                onBackground: Colors.black,
-                primary: Color.fromRGBO(206, 147, 216, 1),
-                onPrimary: Colors.black,
-                secondary: Color.fromRGBO(244, 143, 177, 1),
-                onSecondary: Colors.white,
-                tertiary: Color.fromRGBO(255, 204, 128, 1),
-                error: Colors.red,
-                outline: Color(0xFF424242)),
+                primary: primary,
+                onPrimary: white,
+                secondary: secondary,
+                onSecondary: white,
+                tertiary: tertiary,
+                onTertiary: white,
+                error: errorColor,
+                outline: outlineColor),
 
             // SCAFFOLD
-            scaffoldBackgroundColor: colorWhite,
+            scaffoldBackgroundColor: white,
 
             // TEXT
             textTheme: Theme.of(context).textTheme.apply(
