@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_app/app/data/repository/user_repository.dart';
 import 'package:todo_app/app/domain/model/user.dart';
 
@@ -18,6 +19,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         MyUser user = await _userRepository.signUp(event.user, event.password);
         await _userRepository.setUserData(user);
         emit(SignUpSuccess());
+      } on FirebaseAuthException catch (e) {
+        emit(SignUpFailure(message: e.code));
       } catch (e) {
         emit(SignUpFailure());
       }

@@ -38,7 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
             _errorMsg = 'Usuario o contraseña incorrecto';
           } else if (state is SignInEmailNotVerified) {
             signInProcessing = false;
-            showCustomDialog(
+            showAlertDialog(
                 context,
                 "Verifica tu correo",
                 "Por favor verifica tu correo electrónico para continuar",
