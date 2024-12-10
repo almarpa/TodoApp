@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,14 +35,18 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<bool> isUserEmailVerified() async {
+    return _firebaseAuth.currentUser!.emailVerified;
+  }
+
+  @override
   Future<MyUser> signUp(MyUser myUser, String password) async {
     try {
       UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
           email: myUser.email, password: password);
-
-      myUser = myUser.copyWith(id: user.user!.uid);
-
-      return myUser;
+      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+      await logOut();
+      return myUser.copyWith(id: user.user!.uid);
     } catch (e) {
       log(e.toString());
       rethrow;

@@ -19,7 +19,9 @@ class AuthenticationBloc
       add(AuthenticationUserChanged(user));
     });
     on<AuthenticationUserChanged>((event, emit) {
-      if (event.user != null) {
+      if (event.user != null && !event.user!.emailVerified) {
+        emit(const AuthenticationState.notVerified());
+      } else if (event.user != null) {
         emit(AuthenticationState.authenticated(event.user!));
       } else {
         emit(const AuthenticationState.unauthenticated());

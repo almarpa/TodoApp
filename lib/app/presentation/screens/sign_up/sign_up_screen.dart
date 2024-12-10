@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/app/domain/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/app/presentation/common/dialogs.dart';
 import 'package:todo_app/app/presentation/common/validators.dart';
 
 import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
@@ -19,9 +20,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final emailController = TextEditingController();
   final nameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   IconData iconPassword = CupertinoIcons.eye_fill;
   bool obscurePassword = true;
-  bool signUpRequired = false;
+  bool signUpProcessing = false;
 
   bool containsUpperCase = false;
   bool containsLowerCase = false;
@@ -35,14 +37,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
       listener: (context, state) {
         if (state is SignUpSuccess) {
           setState(() {
-            signUpRequired = false;
+            signUpProcessing = false;
           });
-          // Navigator.pop(context);
+          showCustomDialog(
+              context,
+              "Verifica tu correo",
+              "Por favor verifica tu correo electrónico para continuar",
+              "Aceptar",
+              () => Navigator.pop(context));
         } else if (state is SignUpProcess) {
           setState(() {
-            signUpRequired = true;
+            signUpProcessing = true;
           });
         } else if (state is SignUpFailure) {
+          // TODO: manage possible errors
           return;
         }
       },
@@ -199,7 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     validator: (val) => Validators.userNameValidator(val)),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-              !signUpRequired
+              !signUpProcessing
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: TextButton(

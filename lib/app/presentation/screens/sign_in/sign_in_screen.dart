@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/app/presentation/common/dialogs.dart';
 import 'package:todo_app/app/presentation/common/validators.dart';
 
 import '../../widgets/my_text_field.dart';
@@ -18,7 +21,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool signInRequired = false;
+  bool signInProcessing = false;
   IconData iconPassword = CupertinoIcons.eye_fill;
   bool obscurePassword = true;
   String? _errorMsg;
@@ -28,22 +31,21 @@ class _SignInScreenState extends State<SignInScreen> {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) {
         setState(() {
-          switch (state.runtimeType) {
-            case SignInSuccess _:
-              signInRequired = false;
-              break;
-
-            case SignInProcess _:
-              signInRequired = true;
-              break;
-
-            case SignInFailure _:
-              signInRequired = false;
-              _errorMsg = 'Usuario o contraseña incorrecto';
-              break;
-
-            default:
-              break;
+          if (state is SignInProcess) {
+            signInProcessing = true;
+          } else if (state is SignInFailure) {
+            signInProcessing = false;
+            _errorMsg = 'Usuario o contraseña incorrecto';
+          } else if (state is SignInEmailNotVerified) {
+            signInProcessing = false;
+            showCustomDialog(
+                context,
+                "Verifica tu correo",
+                "Por favor verifica tu correo electrónico para continuar",
+                "Aceptar",
+                () => Navigator.pop(context));
+          } else {
+            signInProcessing = false;
           }
         });
       },
@@ -89,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              !signInRequired
+              !signInProcessing
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: TextButton(

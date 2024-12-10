@@ -16,7 +16,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       emit(SignInProcess());
       try {
         await _userRepository.signIn(event.email, event.password);
-        emit(SignInSuccess());
+        bool isEmailVerified = await _userRepository.isUserEmailVerified();
+        if (isEmailVerified) {
+          emit(SignInSuccess());
+        } else {
+          emit(SignInEmailNotVerified());
+        }
       } on FirebaseAuthException catch (e) {
         emit(SignInFailure(message: e.code));
       } catch (e) {
