@@ -10,15 +10,14 @@ import '../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
 import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen>
-    with TickerProviderStateMixin {
+class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -36,19 +35,39 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           height: MediaQuery.of(context).size.height,
           child: Stack(
             children: [
-              positionedCircles(context),
+              Align(
+                alignment: const AlignmentDirectional(20, -1.4),
+                child: CircleContainer(
+                  diameter: MediaQuery.of(context).size.width,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
+              Align(
+                alignment: const AlignmentDirectional(-2.7, -1.6),
+                child: CircleContainer(
+                  diameter: MediaQuery.of(context).size.width / 1.3,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              Align(
+                alignment: const AlignmentDirectional(2.7, -1.6),
+                child: CircleContainer(
+                  diameter: MediaQuery.of(context).size.width / 1.3,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
               BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
+                filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 50.0),
                 child: Container(),
               ),
               const Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 80.0),
+                  padding: EdgeInsets.only(top: 50.0),
                   child: Text(
                     'I \n Have  \n   A \n     Plan',
                     style: TextStyle(
-                      fontSize: 40.0,
+                      fontSize: 35.0,
                       fontWeight: FontWeight.bold,
                       color: white,
                       letterSpacing: 5,
@@ -59,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.8,
+                  height: MediaQuery.of(context).size.height / 1.6,
                   child: Column(
                     children: [
                       Padding(
@@ -68,7 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           controller: tabController,
                           unselectedLabelColor: Theme.of(context)
                               .colorScheme
-                              .onBackground
+                              .onSurface
                               .withOpacity(0.5),
                           labelColor: Theme.of(context).colorScheme.onSurface,
                           tabs: const [
@@ -123,34 +142,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       ),
     );
   }
-}
-
-Widget positionedCircles(BuildContext context) {
-  return Stack(
-    children: [
-      Align(
-        alignment: const AlignmentDirectional(20, -1.2),
-        child: CircleContainer(
-          diameter: MediaQuery.of(context).size.width,
-          color: Theme.of(context).colorScheme.tertiary,
-        ),
-      ),
-      Align(
-        alignment: const AlignmentDirectional(-2.7, -1.2),
-        child: CircleContainer(
-          diameter: MediaQuery.of(context).size.width / 1.3,
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-      ),
-      Align(
-        alignment: const AlignmentDirectional(2.7, -1.2),
-        child: CircleContainer(
-          diameter: MediaQuery.of(context).size.width / 1.3,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      ),
-    ],
-  );
 }
 
 class CircleContainer extends StatelessWidget {

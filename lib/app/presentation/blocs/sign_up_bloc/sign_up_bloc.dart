@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_app/app/data/repository/user_repository.dart';
-import 'package:todo_app/app/domain/model/user.dart';
+import 'package:todo_app/app/domain/model/user_model.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
@@ -16,13 +16,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpRequired>((event, emit) async {
       emit(SignUpProcess());
       try {
-        MyUser user = await _userRepository.signUp(event.user, event.password);
+        UserModel user =
+            await _userRepository.signUp(event.user, event.password);
         await _userRepository.setUserData(user);
         emit(SignUpSuccess());
       } on FirebaseAuthException catch (e) {
         emit(SignUpFailure(message: e.code));
       } catch (e) {
-        emit(SignUpFailure());
+        emit(const SignUpFailure());
       }
     });
   }

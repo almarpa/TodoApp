@@ -2,26 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../theme/colors.dart';
 
-class InputDecorationWidget extends StatelessWidget {
+class CustomInput extends StatelessWidget {
   final TextInputType keyboardType;
-  //obsureText opcional
   final bool obscureText;
-  //maxLines opcional
   final int? maxLines;
-  //readonly opcional
   final bool readOnly;
   final String hintText;
   final String labelText;
-  //prefixIcon opcional
   final Widget? prefixIcon;
-  //suffixIcon opcional
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
   final VoidCallback? onTap;
   final TextEditingController? controller;
   final Color color;
 
-  const InputDecorationWidget({
+  const CustomInput({
     super.key,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,

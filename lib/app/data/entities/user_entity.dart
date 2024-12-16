@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class MyUserEntity extends Equatable {
+class UserEntity extends Equatable {
   final String userId;
   final String email;
   final String username;
 
-  const MyUserEntity(
+  const UserEntity(
       {required this.userId, required this.email, required this.username});
 
   Map<String, Object?> toDocument() {
@@ -16,8 +16,8 @@ class MyUserEntity extends Equatable {
     };
   }
 
-  static MyUserEntity fromDocument(Map<String, dynamic> doc) {
-    return MyUserEntity(
+  static UserEntity fromDocument(Map<String, dynamic> doc) {
+    return UserEntity(
         userId: doc['id'], email: doc['email'], username: doc['username']);
   }
 

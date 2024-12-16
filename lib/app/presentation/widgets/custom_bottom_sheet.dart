@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/app/presentation/widgets/text_title.dart';
 import 'package:todo_app/app/presentation/screens/home/task_provider.dart';
+import 'package:todo_app/app/presentation/widgets/title_h1.dart';
 
 import '../../data/entities/task_entity.dart';
 
-class TaskModal extends StatefulWidget {
-  const TaskModal({super.key});
+class CustomBottomSheet extends StatefulWidget {
+  const CustomBottomSheet({super.key});
 
   @override
-  State<TaskModal> createState() => _TaskModalState();
+  State<CustomBottomSheet> createState() => _CustomBottomSheetState();
 }
 
-class _TaskModalState extends State<TaskModal> {
+class _CustomBottomSheetState extends State<CustomBottomSheet> {
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -38,7 +38,7 @@ class _TaskModalState extends State<TaskModal> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const TextTitle("New task"),
+            const TitleH1(title: "New task"),
             const SizedBox(height: 30),
             TextField(
               controller: _controller,

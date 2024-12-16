@@ -39,7 +39,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<MyUser> signUp(MyUser myUser, String password) async {
+  Future<UserModel> signUp(UserModel myUser, String password) async {
     try {
       UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
           email: myUser.email, password: password);
@@ -53,7 +53,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> setUserData(MyUser myUser) async {
+  Future<void> setUserData(UserModel myUser) async {
     try {
       await usersCollection.doc(myUser.id).set(myUser.toEntity().toDocument());
     } catch (e) {

@@ -1,8 +1,9 @@
+import 'package:todo_app/app/presentation/screens/splash/splash_screen.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:todo_app/app/presentation/screens/welcome/welcome_screen.dart';
+import 'package:todo_app/app/presentation/screens/auth/auth_screen.dart';
 import 'package:todo_app/app/presentation/screens/home/home_screen.dart';
 import 'package:todo_app/app/presentation/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:todo_app/app/presentation/blocs/authentication_bloc/authentication_bloc.dart';
@@ -12,14 +13,6 @@ class MyApp extends StatelessWidget {
   final UserRepository userRepository;
   const MyApp(this.userRepository, {super.key});
 
-  // OLD
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MultiProvider(providers: [
-  //     ChangeNotifierProvider(lazy: false, create: (_) => FormProvider()),
-  //     ChangeNotifierProvider(lazy: false, create: (_) => LoginProvider()),
-  //   ], child: const MyAppView());
-  // }
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<AuthenticationBloc>(
@@ -39,7 +32,9 @@ class MyAppView extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
-          if (state.status == AuthenticationStatus.authenticated) {
+          if (state.status == AuthenticationStatus.unknown) {
+            return const SplashScreen();
+          } else if (state.status == AuthenticationStatus.authenticated) {
             return BlocProvider(
               create: (context) => SignInBloc(
                   userRepository:
@@ -47,7 +42,7 @@ class MyAppView extends StatelessWidget {
               child: const HomeScreen(),
             );
           } else {
-            return const WelcomeScreen();
+            return const AuthScreen();
           }
         }),
         theme: ThemeData(

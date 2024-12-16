@@ -4,9 +4,9 @@ import 'package:todo_app/app/domain/model/models.dart';
 abstract class UserRepository {
   Stream<User?> get user;
 
-  Future<MyUser> signUp(MyUser myUser, String password);
+  Future<UserModel> signUp(UserModel myUser, String password);
 
-  Future<void> setUserData(MyUser user);
+  Future<void> setUserData(UserModel user);
 
   Future<void> signIn(String email, String password);
 

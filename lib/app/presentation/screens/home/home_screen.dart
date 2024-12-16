@@ -6,7 +6,7 @@ import 'package:todo_app/app/presentation/screens/home/task_list_placeholder.dar
 import 'package:todo_app/app/presentation/screens/home/task_provider.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
 import 'package:todo_app/app/data/entities/task_entity.dart';
-import '../../widgets/task_modal.dart';
+import '../../widgets/custom_bottom_sheet.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
         isScrollControlled: true,
         builder: (_) => ChangeNotifierProvider.value(
               value: context.read<TaskProvider>(),
-              child: const TaskModal(),
+              child: const CustomBottomSheet(),
             ));
   }
 }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class TaskDialog extends StatefulWidget {
-  const TaskDialog({super.key, required this.onAcceptPressed});
+class CustomDialog extends StatefulWidget {
+  const CustomDialog({super.key, required this.onAcceptPressed});
 
   final String onAcceptPressed;
 
   @override
-  State<TaskDialog> createState() => _TaskDialogState();
+  State<CustomDialog> createState() => _CustomDialogState();
 }
 
-class _TaskDialogState extends State<TaskDialog> {
+class _CustomDialogState extends State<CustomDialog> {
   String description = "";
 
   @override
@@ -17,9 +17,7 @@ class _TaskDialogState extends State<TaskDialog> {
     return AlertDialog(
       title: const Text('Add New Task'),
       content: TextField(
-        onChanged: (value) {
-          description = value;
-        },
+        onChanged: (value) => description = value,
         decoration: const InputDecoration(hintText: 'Enter task description'),
       ),
       actions: <Widget>[
