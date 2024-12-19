@@ -80,4 +80,10 @@ class Validators {
 
     return null;
   }
+
+  static bool containsSpecialCharacter(String val) =>
+      RegExp(r'[!@#$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^]').hasMatch(val);
+  static bool containsUppercase(String val) => RegExp(r'[A-Z]').hasMatch(val);
+  static bool containsLowercase(String val) => RegExp(r'[a-z]').hasMatch(val);
+  static bool containsDigits(String val) => RegExp(r'[0-9]').hasMatch(val);
 }

@@ -1,5 +1,5 @@
 import 'package:provider/provider.dart';
-import 'package:todo_app/app/presentation/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:todo_app/app/presentation/screens/sign_in/bloc/sign_in_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/app/presentation/screens/home/task_list.dart';
 import 'package:todo_app/app/presentation/screens/home/task_list_placeholder.dart';

@@ -5,26 +5,24 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_app/app/data/repository/user_repository.dart';
 
-part 'authentication_event.dart';
-part 'authentication_state.dart';
+part 'auth_event.dart';
+part 'auth_state.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
   late final StreamSubscription<User?> _userSubscription;
 
-  AuthenticationBloc({required this.userRepository})
-      : super(const AuthenticationState.unknown()) {
+  AuthBloc({required this.userRepository}) : super(const AuthState.unknown()) {
     _userSubscription = userRepository.user.listen((user) async {
-      add(AuthenticationUserChanged(user));
+      add(AuthUserChanged(user));
     });
-    on<AuthenticationUserChanged>((event, emit) {
+    on<AuthUserChanged>((event, emit) {
       if (event.user != null && !event.user!.emailVerified) {
-        emit(const AuthenticationState.notVerified());
+        emit(const AuthState.notVerified());
       } else if (event.user != null) {
-        emit(AuthenticationState.authenticated(event.user!));
+        emit(AuthState.authenticated(event.user!));
       } else {
-        emit(const AuthenticationState.unauthenticated());
+        emit(const AuthState.unauthenticated());
       }
     });
   }

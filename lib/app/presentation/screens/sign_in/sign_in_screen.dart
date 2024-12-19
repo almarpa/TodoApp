@@ -5,7 +5,7 @@ import 'package:todo_app/app/presentation/common/dialogs.dart';
 import 'package:todo_app/app/presentation/common/validators.dart';
 
 import '../../widgets/my_text_field.dart';
-import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'bloc/sign_in_bloc.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});

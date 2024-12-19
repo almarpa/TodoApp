@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
 
-import '../../blocs/authentication_bloc/authentication_bloc.dart';
-import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
-import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
+import 'bloc/auth_bloc.dart';
+import '../sign_in/bloc/sign_in_bloc.dart';
+import '../sign_up/bloc/sign_up_bloc.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -36,21 +36,21 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           child: Stack(
             children: [
               Align(
-                alignment: const AlignmentDirectional(20, -1.4),
+                alignment: const AlignmentDirectional(20, -1.3),
                 child: CircleContainer(
                   diameter: MediaQuery.of(context).size.width,
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               Align(
-                alignment: const AlignmentDirectional(-2.7, -1.6),
+                alignment: const AlignmentDirectional(-2.7, -1.2),
                 child: CircleContainer(
                   diameter: MediaQuery.of(context).size.width / 1.3,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               Align(
-                alignment: const AlignmentDirectional(2.7, -1.6),
+                alignment: const AlignmentDirectional(2.7, -1.2),
                 child: CircleContainer(
                   diameter: MediaQuery.of(context).size.width / 1.3,
                   color: Theme.of(context).colorScheme.primary,
@@ -63,11 +63,11 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               const Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 50.0),
+                  padding: EdgeInsets.only(top: 60.0),
                   child: Text(
                     'I \n Have  \n   A \n     Plan',
                     style: TextStyle(
-                      fontSize: 35.0,
+                      fontSize: 40.0,
                       fontWeight: FontWeight.bold,
                       color: white,
                       letterSpacing: 5,
@@ -78,7 +78,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.6,
+                  height: MediaQuery.of(context).size.height / 1.7,
                   child: Column(
                     children: [
                       Padding(
@@ -118,16 +118,14 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                         children: [
                           BlocProvider<SignInBloc>(
                             create: (context) => SignInBloc(
-                                userRepository: context
-                                    .read<AuthenticationBloc>()
-                                    .userRepository),
+                                userRepository:
+                                    context.read<AuthBloc>().userRepository),
                             child: const SignInScreen(),
                           ),
                           BlocProvider<SignUpBloc>(
                             create: (context) => SignUpBloc(
-                                userRepository: context
-                                    .read<AuthenticationBloc>()
-                                    .userRepository),
+                                userRepository:
+                                    context.read<AuthBloc>().userRepository),
                             child: const SignUpScreen(),
                           ),
                         ],
