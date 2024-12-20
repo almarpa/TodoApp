@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/app/presentation/common/dialogs.dart';
 import 'package:todo_app/app/presentation/common/validators.dart';
+import 'package:todo_app/app/presentation/widgets/custom_text_button.dart';
 
-import '../../widgets/my_text_field.dart';
+import '../../widgets/custom_text_field.dart';
 import 'bloc/sign_in_bloc.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -54,7 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
               const SizedBox(height: 20),
               SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  child: MyTextField(
+                  child: CustomTextField(
                       controller: emailController,
                       hintText: 'Email',
                       obscureText: false,
@@ -65,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
               const SizedBox(height: 10),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
-                child: MyTextField(
+                child: CustomTextField(
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: obscurePassword,
@@ -92,33 +93,15 @@ class _SignInScreenState extends State<SignInScreen> {
               !signInProcessing
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width * 0.5,
-                      child: TextButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              context.read<SignInBloc>().add(SignInRequired(
-                                  emailController.text,
-                                  passwordController.text));
-                            }
-                          },
-                          style: TextButton.styleFrom(
-                              elevation: 3.0,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(60))),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 5),
-                            child: Text(
-                              'Sign In',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          )),
+                      child: CustomTextButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            context.read<SignInBloc>().add(SignInRequired(
+                                emailController.text, passwordController.text));
+                          }
+                        },
+                        text: 'Sign In',
+                      ),
                     )
                   : const CircularProgressIndicator(),
             ],

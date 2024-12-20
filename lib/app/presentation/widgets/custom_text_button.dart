@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CustomButton extends StatelessWidget {
+class CustomTextButton extends StatelessWidget {
+  final String text;
   final VoidCallback onPressed;
 
-  const CustomButton({
+  const CustomTextButton({
     super.key,
+    required this.text,
     required this.onPressed,
   });
 
@@ -20,12 +22,12 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(60),
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
         child: Text(
-          'Sign Up',
+          text,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w600,

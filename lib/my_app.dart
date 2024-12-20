@@ -44,6 +44,6 @@ class MyAppView extends StatelessWidget {
             return const AuthScreen();
           }
         }),
-        theme: appThemeData);
+        theme: getAppThemeData(context));
   }
 }

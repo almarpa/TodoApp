@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/app/presentation/common/dialogs.dart';
 import 'package:todo_app/app/presentation/common/validators.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
+import 'package:todo_app/app/presentation/widgets/custom_text_button.dart';
 
 import 'bloc/sign_up_bloc.dart';
-import '../../widgets/my_text_field.dart';
+import '../../widgets/custom_text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -83,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 20),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
-                child: MyTextField(
+                child: CustomTextField(
                     controller: emailController,
                     hintText: 'Email',
                     obscureText: false,
@@ -94,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 10),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
-                child: MyTextField(
+                child: CustomTextField(
                     controller: passwordController,
                     hintText: 'Password',
                     obscureText: obscurePassword,
@@ -148,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 10),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
-                child: MyTextField(
+                child: CustomTextField(
                     controller: nameController,
                     hintText: 'Name',
                     obscureText: false,
@@ -159,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 10),
               SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  child: MyTextField(
+                  child: CustomTextField(
                     hintText: 'dd/mm/yyyy',
                     prefixIcon: const Icon(Icons.calendar_today_outlined),
                     validator: Validators.birthValidator,
@@ -172,29 +173,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1900),
                         lastDate: DateTime.now(),
-                        builder: (context, child) {
-                          return Theme(
-                            data: ThemeData.light().copyWith(
-                              colorScheme: const ColorScheme.light(
-                                primary: primary,
-                              ),
-                              dialogBackgroundColor: primary,
-                              textButtonTheme: TextButtonThemeData(
-                                style: ButtonStyle(
-                                  foregroundColor:
-                                      WidgetStateProperty.all(greenOscure),
-                                ),
-                              ),
-                            ),
-                            child: child!,
-                          );
-                        },
                       );
                       if (pickedData != null) {
-                        final DateFormat formatter = DateFormat('dd/MM/yyyy');
-                        String formatedData = formatter.format(pickedData);
                         setState(() {
-                          birthController.text = formatedData;
+                          birthController.text =
+                              DateFormat('dd/MM/yyyy').format(pickedData);
                         });
                       }
                     },
@@ -203,39 +186,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
               !signUpProcessing
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width * 0.5,
-                      child: TextButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              setState(() {
-                                context.read<SignUpBloc>().add(SignUpRequired(
-                                    UserModel.empty.copyWith(
-                                      email: emailController.text,
-                                      username: nameController.text,
-                                    ),
-                                    passwordController.text));
-                              });
-                            }
-                          },
-                          style: TextButton.styleFrom(
-                              elevation: 3.0,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(60))),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 5),
-                            child: Text(
-                              'Sign Up',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          )),
-                    )
+                      child: CustomTextButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            setState(() {
+                              context.read<SignUpBloc>().add(SignUpRequired(
+                                  UserModel.empty.copyWith(
+                                    email: emailController.text,
+                                    username: nameController.text,
+                                  ),
+                                  passwordController.text));
+                            });
+                          }
+                        },
+                        text: 'Sign Up',
+                      ))
                   : const CircularProgressIndicator(),
             ],
           ),

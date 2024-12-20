@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
@@ -13,7 +13,7 @@ class MyTextField extends StatelessWidget {
   final String? errorMsg;
   final String? Function(String?)? onChanged;
 
-  const MyTextField(
+  const CustomTextField(
       {super.key,
       required this.controller,
       required this.hintText,

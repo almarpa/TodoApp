@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         create: (_) => TaskProvider()..fetchTasks(),
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Sign out'),
+            title: const Text('Home'),
             backgroundColor: primary,
             actions: [
               IconButton(
