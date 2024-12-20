@@ -1,6 +1,5 @@
 import 'package:todo_app/app/presentation/screens/splash/splash_screen.dart';
 import 'package:todo_app/app/presentation/theme/app_theme.dart';
-import 'package:todo_app/app/presentation/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
