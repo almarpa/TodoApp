@@ -18,12 +18,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
   final nameController = TextEditingController();
   final birthController = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
 
   IconData iconPassword = CupertinoIcons.eye_fill;
   bool obscurePassword = true;
@@ -57,192 +56,188 @@ class _SignUpScreenState extends State<SignUpScreen> {
         });
       },
       child: Form(
-        key: _formKey,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // SizedBox(
-                //     width: MediaQuery.of(context).size.width * 0.2,
-                //     child: InkWell(
-                //       onTap: () {
-                //         openImagePicker();
-                //       },
-                //       child: image == null
-                //           ? const CircleAvatar(
-                //               radius: 30,
-                //               child: Icon(
-                //                 Icons.camera_alt_outlined,
-                //                 size: 30,
-                //                 color: textColor,
-                //               ),
-                //             )
-                //           : CircleAvatar(
-                //               radius: 60,
-                //               backgroundImage: FileImage(image!),
-                //             ),
-                //     )),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: MyTextField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                      keyboardType: TextInputType.emailAddress,
-                      prefixIcon: const Icon(CupertinoIcons.mail_solid),
-                      validator: (val) => Validators.emailValidator(val)),
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: MyTextField(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: obscurePassword,
-                      keyboardType: TextInputType.visiblePassword,
-                      prefixIcon: const Icon(CupertinoIcons.lock_fill),
-                      onChanged: (val) {
-                        if (val != null) validateForm(val);
+        key: formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // SizedBox(
+              //     width: MediaQuery.of(context).size.width * 0.2,
+              //     child: InkWell(
+              //       onTap: () {
+              //         openImagePicker();
+              //       },
+              //       child: image == null
+              //           ? const CircleAvatar(
+              //               radius: 30,
+              //               child: Icon(
+              //                 Icons.camera_alt_outlined,
+              //                 size: 30,
+              //                 color: textColor,
+              //               ),
+              //             )
+              //           : CircleAvatar(
+              //               radius: 60,
+              //               backgroundImage: FileImage(image!),
+              //             ),
+              //     )),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: MyTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    obscureText: false,
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: const Icon(CupertinoIcons.mail_solid),
+                    validator: (val) => Validators.emailValidator(val)),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: MyTextField(
+                    controller: passwordController,
+                    hintText: 'Password',
+                    obscureText: obscurePassword,
+                    keyboardType: TextInputType.visiblePassword,
+                    prefixIcon: const Icon(CupertinoIcons.lock_fill),
+                    onChanged: (val) {
+                      if (val != null) validateForm(val);
+                    },
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obscurePassword = !obscurePassword;
+                          if (obscurePassword) {
+                            iconPassword = CupertinoIcons.eye_fill;
+                          } else {
+                            iconPassword = CupertinoIcons.eye_slash_fill;
+                          }
+                        });
                       },
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            obscurePassword = !obscurePassword;
-                            if (obscurePassword) {
-                              iconPassword = CupertinoIcons.eye_fill;
-                            } else {
-                              iconPassword = CupertinoIcons.eye_slash_fill;
-                            }
-                          });
+                      icon: Icon(iconPassword),
+                    ),
+                    validator: (val) => Validators.passwordValidator(val)),
+              ),
+              const SizedBox(height: 4),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Row(
+                    children: [
+                      Visibility(
+                          visible: containsUpperCase,
+                          child: const Text("⚈  1 mayúscula requerida",
+                              style: TextStyle(color: errorColor))),
+                      Visibility(
+                          visible: containsLowerCase,
+                          child: const Text("⚈  1 minúscula requerida",
+                              style: TextStyle(color: errorColor))),
+                      Visibility(
+                          visible: containsNumber,
+                          child: const Text("⚈  1 caracter numérico requerido",
+                              style: TextStyle(color: errorColor))),
+                      Visibility(
+                          visible: containsSpecialChar,
+                          child: const Text("⚈  1 caracter especial requerido",
+                              style: TextStyle(color: errorColor))),
+                      Visibility(
+                          visible: upToEightCharacters,
+                          child: const Text("⚈  > 8 caracteres requeridos",
+                              style: TextStyle(color: errorColor))),
+                    ],
+                  )),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: MyTextField(
+                    controller: nameController,
+                    hintText: 'Name',
+                    obscureText: false,
+                    keyboardType: TextInputType.name,
+                    prefixIcon: const Icon(CupertinoIcons.person_fill),
+                    validator: (val) => Validators.userNameValidator(val)),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: MyTextField(
+                    hintText: 'dd/mm/yyyy',
+                    prefixIcon: const Icon(Icons.calendar_today_outlined),
+                    validator: Validators.birthValidator,
+                    controller: birthController,
+                    obscureText: false,
+                    keyboardType: TextInputType.datetime,
+                    onTap: () async {
+                      DateTime? pickedData = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                        builder: (context, child) {
+                          return Theme(
+                            data: ThemeData.light().copyWith(
+                              colorScheme: const ColorScheme.light(
+                                primary: primary,
+                              ),
+                              dialogBackgroundColor: primary,
+                              textButtonTheme: TextButtonThemeData(
+                                style: ButtonStyle(
+                                  foregroundColor:
+                                      WidgetStateProperty.all(greenOscure),
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
                         },
-                        icon: Icon(iconPassword),
-                      ),
-                      validator: (val) => Validators.passwordValidator(val)),
-                ),
-                const SizedBox(height: 4),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: Row(
-                      children: [
-                        Visibility(
-                            visible: containsUpperCase,
-                            child: const Text("⚈  1 mayúscula requerida",
-                                style: TextStyle(color: errorColor))),
-                        Visibility(
-                            visible: containsLowerCase,
-                            child: const Text("⚈  1 minúscula requerida",
-                                style: TextStyle(color: errorColor))),
-                        Visibility(
-                            visible: containsNumber,
-                            child: const Text(
-                                "⚈  1 caracter numérico requerido",
-                                style: TextStyle(color: errorColor))),
-                        Visibility(
-                            visible: containsSpecialChar,
-                            child: const Text(
-                                "⚈  1 caracter especial requerido",
-                                style: TextStyle(color: errorColor))),
-                        Visibility(
-                            visible: upToEightCharacters,
-                            child: const Text("⚈  > 8 caracteres requeridos",
-                                style: TextStyle(color: errorColor))),
-                      ],
-                    )),
-                const SizedBox(height: 10),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: MyTextField(
-                      controller: nameController,
-                      hintText: 'Name',
-                      obscureText: false,
-                      keyboardType: TextInputType.name,
-                      prefixIcon: const Icon(CupertinoIcons.person_fill),
-                      validator: (val) => Validators.userNameValidator(val)),
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: MyTextField(
-                      hintText: 'dd/mm/yyyy',
-                      prefixIcon: const Icon(Icons.calendar_today_outlined),
-                      validator: Validators.birthValidator,
-                      controller: birthController,
-                      obscureText: false,
-                      keyboardType: TextInputType.datetime,
-                      onTap: () async {
-                        DateTime? pickedData = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
-                          builder: (context, child) {
-                            return Theme(
-                              data: ThemeData.light().copyWith(
-                                colorScheme: const ColorScheme.light(
-                                  primary: primary,
-                                ),
-                                dialogBackgroundColor: primary,
-                                textButtonTheme: TextButtonThemeData(
-                                  style: ButtonStyle(
-                                    foregroundColor:
-                                        WidgetStateProperty.all(greenOscure),
-                                  ),
-                                ),
-                              ),
-                              child: child!,
-                            );
+                      );
+                      if (pickedData != null) {
+                        final DateFormat formatter = DateFormat('dd/MM/yyyy');
+                        String formatedData = formatter.format(pickedData);
+                        setState(() {
+                          birthController.text = formatedData;
+                        });
+                      }
+                    },
+                  )),
+              const SizedBox(height: 40),
+              !signUpProcessing
+                  ? SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: TextButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              setState(() {
+                                context.read<SignUpBloc>().add(SignUpRequired(
+                                    UserModel.empty.copyWith(
+                                      email: emailController.text,
+                                      username: nameController.text,
+                                    ),
+                                    passwordController.text));
+                              });
+                            }
                           },
-                        );
-                        if (pickedData != null) {
-                          final DateFormat formatter = DateFormat('dd/MM/yyyy');
-                          String formatedData = formatter.format(pickedData);
-                          setState(() {
-                            birthController.text = formatedData;
-                          });
-                        }
-                      },
-                    )),
-                const SizedBox(height: 10),
-                !signUpProcessing
-                    ? SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: TextButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                setState(() {
-                                  context.read<SignUpBloc>().add(SignUpRequired(
-                                      UserModel.empty.copyWith(
-                                        email: emailController.text,
-                                        username: nameController.text,
-                                      ),
-                                      passwordController.text));
-                                });
-                              }
-                            },
-                            style: TextButton.styleFrom(
-                                elevation: 3.0,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(60))),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 5),
-                              child: Text(
-                                'Sign Up',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            )),
-                      )
-                    : const CircularProgressIndicator(),
-                const SizedBox(height: 30),
-              ],
-            ),
+                          style: TextButton.styleFrom(
+                              elevation: 3.0,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(60))),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 5),
+                            child: Text(
+                              'Sign Up',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          )),
+                    )
+                  : const CircularProgressIndicator(),
+            ],
           ),
         ),
       ),

@@ -15,14 +15,14 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   bool signInProcessing = false;
   IconData iconPassword = CupertinoIcons.eye_fill;
   bool obscurePassword = true;
-  String? _errorMsg;
+  String? error;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen> {
             signInProcessing = true;
           } else if (state is SignInFailure) {
             signInProcessing = false;
-            _errorMsg = 'Usuario o contraseña incorrecto';
+            error = 'Usuario o contraseña incorrecto';
           } else if (state is SignInEmailNotVerified) {
             signInProcessing = false;
             showAlertDialog(
@@ -48,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
         });
       },
       child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -60,7 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       obscureText: false,
                       keyboardType: TextInputType.emailAddress,
                       prefixIcon: const Icon(CupertinoIcons.mail_solid),
-                      errorMsg: _errorMsg,
+                      errorMsg: error,
                       validator: (val) => Validators.emailValidator(val))),
               const SizedBox(height: 10),
               SizedBox(
@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   obscureText: obscurePassword,
                   keyboardType: TextInputType.visiblePassword,
                   prefixIcon: const Icon(CupertinoIcons.lock_fill),
-                  errorMsg: _errorMsg,
+                  errorMsg: error,
                   validator: (val) => Validators.passwordValidator(val),
                   suffixIcon: IconButton(
                     onPressed: () {
@@ -94,7 +94,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: TextButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (formKey.currentState!.validate()) {
                               context.read<SignInBloc>().add(SignInRequired(
                                   emailController.text,
                                   passwordController.text));

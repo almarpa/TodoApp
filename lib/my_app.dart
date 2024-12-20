@@ -32,14 +32,14 @@ class MyAppView extends StatelessWidget {
         title: 'IHaveAPlan',
         debugShowCheckedModeBanner: false,
         home: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-          if (state.status == AuthStatus.unknown) {
-            return const SplashScreen();
-          } else if (state.status == AuthStatus.authenticated) {
+          if (state.status == AuthStatus.authenticated) {
             return BlocProvider(
               create: (context) => SignInBloc(
                   userRepository: context.read<AuthBloc>().userRepository),
               child: const HomeScreen(),
             );
+          } else if (state.status == AuthStatus.unknown) {
+            return const SplashScreen();
           } else {
             return const AuthScreen();
           }
