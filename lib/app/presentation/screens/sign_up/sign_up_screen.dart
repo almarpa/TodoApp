@@ -103,6 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     prefixIcon: const Icon(CupertinoIcons.lock_fill),
                     onChanged: (val) {
                       if (val != null) validateForm(val);
+                      return null;
                     },
                     suffixIcon: IconButton(
                       onPressed: () {
