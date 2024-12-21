@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app/presentation/screens/home/task_provider.dart';
+import 'package:todo_app/app/presentation/widgets/custom_text_button.dart';
 import 'package:todo_app/app/presentation/widgets/title_h1.dart';
 
 import '../../data/entities/task_entity.dart';
@@ -38,7 +39,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const TitleH1(title: "New task"),
+            const TitleH1(title: "Nueva tarea"),
             const SizedBox(height: 30),
             TextField(
               controller: _controller,
@@ -47,10 +48,10 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16)),
-                  hintText: "Description"),
+                  hintText: "Descripción"),
             ),
             const SizedBox(height: 50),
-            ElevatedButton(
+            CustomTextButton(
               onPressed: () {
                 if (_controller.text.isNotEmpty) {
                   final task = Task(_controller.text);
@@ -58,7 +59,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text("Accept"),
+              text: "Aceptar",
             ),
             const SizedBox(height: 30),
           ],
