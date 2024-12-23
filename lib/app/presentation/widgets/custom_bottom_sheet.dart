@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo_app/app/presentation/screens/home/task_provider.dart';
 import 'package:todo_app/app/presentation/widgets/custom_text_button.dart';
 import 'package:todo_app/app/presentation/widgets/title_h1.dart';
 
-import '../../data/entities/task_entity.dart';
-
 class CustomBottomSheet extends StatefulWidget {
-  const CustomBottomSheet({super.key});
+  final void Function(String) onPressed;
+
+  const CustomBottomSheet({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   State<CustomBottomSheet> createState() => _CustomBottomSheetState();
@@ -52,13 +53,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
             ),
             const SizedBox(height: 50),
             CustomTextButton(
-              onPressed: () {
-                if (_controller.text.isNotEmpty) {
-                  final task = Task(_controller.text);
-                  context.read<TaskProvider>().addNewTask(task);
-                  Navigator.of(context).pop();
-                }
-              },
+              onPressed: () => widget.onPressed(_controller.text),
               text: "Aceptar",
             ),
             const SizedBox(height: 30),

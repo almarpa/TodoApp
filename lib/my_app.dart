@@ -35,7 +35,7 @@ class MyAppView extends StatelessWidget {
             return BlocProvider(
               create: (context) => SignInBloc(
                   userRepository: context.read<AuthBloc>().userRepository),
-              child: const HomeScreen(),
+              child: HomeScreen(context.read<AuthBloc>().userRepository),
             );
           } else if (state.status == AuthStatus.unknown) {
             return const SplashScreen();

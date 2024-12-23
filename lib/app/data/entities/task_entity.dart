@@ -1,18 +1,27 @@
-class Task {
-  Task(this.title, {this.done = false});
+import 'package:equatable/equatable.dart';
+import 'package:todo_app/app/domain/model/models.dart';
 
-  late final String title;
-  late bool done;
+class TaskEntity extends Equatable {
+  final String uuid;
+  final String description;
+  final bool isDone;
 
-  Task.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    done = json['done'];
-  }
+  const TaskEntity(
+      {required this.uuid, required this.description, required this.isDone});
 
-  Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'done': done,
-    };
-  }
+  static TaskEntity fromJson(Map<String, dynamic> json) => TaskEntity(
+      uuid: json['id'],
+      description: json['description'],
+      isDone: json['isDone']);
+
+  Map<String, dynamic> toJson() => {
+        'uuid': uuid,
+        'description': description,
+        'isDone': isDone,
+      };
+
+  TaskModel toModel() => TaskModel(uuid, description, isDone);
+
+  @override
+  List<Object?> get props => [uuid, description, isDone];
 }

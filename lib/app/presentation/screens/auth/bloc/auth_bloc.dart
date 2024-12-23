@@ -10,12 +10,13 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
-  late final StreamSubscription<User?> _userSubscription;
+  late final StreamSubscription<User?> userStream;
 
   AuthBloc({required this.userRepository}) : super(const AuthState.unknown()) {
-    _userSubscription = userRepository.user.listen((user) async {
+    userStream = userRepository.user.listen((user) async {
       add(AuthUserChanged(user));
     });
+
     on<AuthUserChanged>((event, emit) {
       if (event.user != null && !event.user!.emailVerified) {
         emit(const AuthState.notVerified());
@@ -29,7 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   @override
   Future<void> close() {
-    _userSubscription.cancel();
+    userStream.cancel();
     return super.close();
   }
 }

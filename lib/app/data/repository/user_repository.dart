@@ -5,12 +5,12 @@ abstract class UserRepository {
   Stream<User?> get user;
 
   Future<UserModel> signUp(UserModel myUser, String password);
-
-  Future<void> setUserData(UserModel user);
-
   Future<void> signIn(String email, String password);
-
+  Future<void> logOut();
+  Future<void> setUserData(UserModel user);
   Future<bool> isUserEmailVerified();
 
-  Future<void> logOut();
+  Stream<List<TaskModel>> get tasks;
+  Future<void> checkTask(TaskModel task);
+  Future<void> addTask(TaskModel task);
 }

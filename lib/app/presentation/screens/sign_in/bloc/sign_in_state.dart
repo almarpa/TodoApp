@@ -1,5 +1,6 @@
 part of 'sign_in_bloc.dart';
 
+@immutable
 sealed class SignInState extends Equatable {
   const SignInState();
 

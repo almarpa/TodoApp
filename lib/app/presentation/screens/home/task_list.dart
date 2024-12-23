@@ -1,11 +1,11 @@
-import 'package:todo_app/app/data/entities/task_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/app/domain/model/models.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList(this.tasks, {super.key, required this.onTaskDoneChange});
 
-  final List<Task> tasks;
-  final void Function(Task task) onTaskDoneChange;
+  final List<TaskModel> tasks;
+  final void Function(TaskModel task) onTaskDoneChange;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class TaskList extends StatelessWidget {
 class _TaskItem extends StatelessWidget {
   const _TaskItem(this.task, {required this.onTap});
 
-  final Task task;
+  final TaskModel task;
   final VoidCallback onTap;
 
   @override
@@ -45,7 +45,7 @@ class _TaskItem extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    task.done
+                    task.isDone
                         ? Icons.check_box_outlined
                         : Icons.check_box_outline_blank,
                     color: Theme.of(context).colorScheme.primary,
@@ -53,7 +53,7 @@ class _TaskItem extends StatelessWidget {
                   const SizedBox(width: 10),
                   Flexible(
                       child: Text(
-                    task.title,
+                    task.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   )),

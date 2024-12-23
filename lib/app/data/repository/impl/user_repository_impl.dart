@@ -3,24 +3,26 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo_app/app/data/entities/task_entity.dart';
 import 'package:todo_app/app/domain/model/models.dart';
 
 import '../user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final FirebaseAuth _firebaseAuth;
-  final usersCollection = FirebaseFirestore.instance.collection('user');
+  User firebaseUser = FirebaseAuth.instance.currentUser!;
+  CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('user');
 
   UserRepositoryImpl({
     FirebaseAuth? firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   @override
-  Stream<User?> get user {
-    return _firebaseAuth.authStateChanges().map((firebaseUser) {
-      return firebaseUser;
-    });
-  }
+  Stream<User?> get user =>
+      _firebaseAuth.authStateChanges().map((firebaseUser) {
+        return firebaseUser;
+      });
 
   @override
   Future<void> signIn(String email, String password) async {
@@ -45,7 +47,7 @@ class UserRepositoryImpl implements UserRepository {
           email: myUser.email, password: password);
       await FirebaseAuth.instance.currentUser!.sendEmailVerification();
       await logOut();
-      return myUser.copyWith(id: user.user!.uid);
+      return myUser.setId(user.user!.uid);
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -55,7 +57,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> setUserData(UserModel myUser) async {
     try {
-      await usersCollection.doc(myUser.id).set(myUser.toEntity().toDocument());
+      await usersCollection.doc(myUser.id).set(myUser.toEntity().toJson());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -65,5 +67,46 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> logOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  @override
+  Stream<List<TaskModel>> get tasks async* {
+    yield* usersCollection
+        .doc(firebaseUser.uid)
+        .collection('tasks')
+        .snapshots()
+        .map(
+          (snapshot) => List<TaskModel>.from(
+            snapshot.docs
+                .map((doc) => TaskEntity.fromJson(doc.data()).toModel()),
+          ),
+        );
+  }
+
+  @override
+  Future<void> checkTask(TaskModel taskModel) async {
+    try {
+      await usersCollection
+          .doc(firebaseUser.uid)
+          .collection('tasks')
+          .doc(taskModel.uuid)
+          .update({'isDone': !taskModel.isDone});
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> addTask(TaskModel task) async {
+    try {
+      await usersCollection.doc(firebaseUser.uid).collection('tasks').add({
+        'id': task.uuid,
+        'description': task.description,
+        'isDone': task.isDone,
+      });
+    } catch (e) {
+      throw Exception("Error al crear la tarea: $e");
+    }
   }
 }

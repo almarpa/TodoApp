@@ -9,23 +9,14 @@ class UserModel extends Equatable {
   const UserModel(
       {required this.id, required this.email, required this.username});
 
-  static const empty = UserModel(id: '', email: '', username: '');
+  static empty(String email, String username) =>
+      UserModel(id: '', email: email, username: username);
 
-  UserModel copyWith({String? id, String? email, String? username}) {
-    return UserModel(
-        id: id ?? this.id,
-        email: email ?? this.email,
-        username: username ?? this.username);
-  }
+  UserModel setId(String id) =>
+      UserModel(id: id, email: email, username: username);
 
-  UserEntity toEntity() {
-    return UserEntity(userId: id, email: email, username: username);
-  }
-
-  static UserModel fromEntity(UserEntity entity) {
-    return UserModel(
-        id: entity.userId, email: entity.email, username: entity.username);
-  }
+  UserEntity toEntity() =>
+      UserEntity(userId: id, email: email, username: username);
 
   @override
   List<Object?> get props => [id, email, username];
