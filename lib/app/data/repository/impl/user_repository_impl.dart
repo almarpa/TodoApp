@@ -86,10 +86,18 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> checkTask(TaskModel taskModel) async {
     try {
-      await usersCollection
+      QuerySnapshot<Map<String, dynamic>> taskQuery = await usersCollection
           .doc(firebaseUser.uid)
           .collection('tasks')
-          .doc(taskModel.uuid)
+          .where('id', isEqualTo: taskModel.uuid)
+          .get();
+
+      if (taskQuery.docs.isEmpty) {
+        log("No se encontraron tareas con ese nombre.");
+        return;
+      }
+
+      await taskQuery.docs.first.reference
           .update({'isDone': !taskModel.isDone});
     } catch (e) {
       log(e.toString());
@@ -107,6 +115,29 @@ class UserRepositoryImpl implements UserRepository {
       });
     } catch (e) {
       throw Exception("Error al crear la tarea: $e");
+    }
+  }
+
+  @override
+  Future<void> deleteTask(String taskId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> taskQuery = await usersCollection
+          .doc(firebaseUser.uid)
+          .collection('tasks')
+          .where('id', isEqualTo: taskId)
+          .get();
+
+      if (taskQuery.docs.isEmpty) {
+        log("No se encontraron tareas con ese nombre.");
+        return;
+      }
+
+      for (var doc in taskQuery.docs) {
+        await doc.reference.delete();
+      }
+    } catch (e) {
+      log(e.toString());
+      rethrow;
     }
   }
 }

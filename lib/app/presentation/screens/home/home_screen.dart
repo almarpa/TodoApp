@@ -42,6 +42,8 @@ class HomeScreen extends StatelessWidget {
                 state.tasks,
                 onTaskDoneChange: (TaskModel task) =>
                     context.read<TaskBloc>().add(CheckTaskEvent(task)),
+                onDeleteTask: (String taskId) =>
+                    context.read<TaskBloc>().add(DeleteTaskEvent(taskId)),
               );
             } else if (state is Error) {
               return Center(child: Text(state.message));

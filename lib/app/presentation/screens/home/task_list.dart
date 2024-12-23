@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app/domain/model/models.dart';
+import 'package:todo_app/app/presentation/theme/colors.dart';
 
 class TaskList extends StatelessWidget {
-  const TaskList(this.tasks, {super.key, required this.onTaskDoneChange});
+  const TaskList(this.tasks,
+      {super.key, required this.onTaskDoneChange, required this.onDeleteTask});
 
   final List<TaskModel> tasks;
   final void Function(TaskModel task) onTaskDoneChange;
+  final void Function(String taskId) onDeleteTask;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +21,22 @@ class TaskList extends StatelessWidget {
                 child: ListView.separated(
                     itemCount: tasks.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 10),
-                    itemBuilder: (context, index) =>
-                        _TaskItem(tasks[index], onTap: () {
-                          onTaskDoneChange(tasks[index]);
-                        })))
+                    itemBuilder: (context, index) => Dismissible(
+                          key: Key(tasks[index].uuid),
+                          onDismissed: (direction) {
+                            onDeleteTask(tasks[index].uuid);
+                          },
+                          background: Container(
+                            color: Theme.of(context).colorScheme.error,
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.only(right: 20),
+                            child: const Icon(Icons.delete, color: white),
+                          ),
+                          direction: DismissDirection.endToStart,
+                          child: _TaskItem(tasks[index], onTap: () {
+                            onTaskDoneChange(tasks[index]);
+                          }),
+                        )))
           ],
         ));
   }

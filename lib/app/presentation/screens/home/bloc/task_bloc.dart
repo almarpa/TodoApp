@@ -17,6 +17,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<CheckTaskEvent>(_onTaskDone);
     on<TasksUpdatedEvent>(_onTaskUpdated);
     on<AddTaskEvent>(_onAddTask);
+    on<DeleteTaskEvent>(_onDeleteTask);
   }
 
   void _onTaskDone(CheckTaskEvent event, Emitter<TaskState> emit) async {
@@ -34,6 +35,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   void _onAddTask(AddTaskEvent event, Emitter<TaskState> emit) async {
     try {
       await userRepository.addTask(event.task);
+    } catch (e) {
+      emit(Error(e.toString()));
+    }
+  }
+
+  void _onDeleteTask(DeleteTaskEvent event, Emitter<TaskState> emit) async {
+    try {
+      await userRepository.deleteTask(event.taskId);
     } catch (e) {
       emit(Error(e.toString()));
     }
