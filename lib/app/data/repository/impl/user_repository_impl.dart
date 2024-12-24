@@ -4,7 +4,8 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_app/app/data/entities/task_entity.dart';
-import 'package:todo_app/app/domain/model/models.dart';
+import 'package:todo_app/app/domain/model/task_model.dart';
+import 'package:todo_app/app/domain/model/user_model.dart';
 
 import '../user_repository.dart';
 

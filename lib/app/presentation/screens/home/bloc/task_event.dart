@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_app/app/domain/model/models.dart';
+import 'package:todo_app/app/domain/model/task_model.dart';
 
 part 'task_event.freezed.dart';
 

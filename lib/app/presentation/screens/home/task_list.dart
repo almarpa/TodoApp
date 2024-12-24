@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app/domain/model/models.dart';
+import 'package:todo_app/app/domain/model/task_model.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
 
 class TaskList extends StatelessWidget {

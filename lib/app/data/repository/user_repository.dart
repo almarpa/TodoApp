@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:todo_app/app/domain/model/models.dart';
+import 'package:todo_app/app/domain/model/task_model.dart';
+import 'package:todo_app/app/domain/model/user_model.dart';
 
 abstract class UserRepository {
   Stream<User?> get user;

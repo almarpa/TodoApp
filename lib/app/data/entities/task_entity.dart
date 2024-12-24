@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:todo_app/app/domain/model/models.dart';
+import 'package:todo_app/app/domain/model/task_model.dart';
 
 class TaskEntity extends Equatable {
   final String uuid;
