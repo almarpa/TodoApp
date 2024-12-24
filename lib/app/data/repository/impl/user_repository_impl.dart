@@ -92,10 +92,7 @@ class UserRepositoryImpl implements UserRepository {
           .where('id', isEqualTo: taskModel.uuid)
           .get();
 
-      if (taskQuery.docs.isEmpty) {
-        log("No se encontraron tareas con ese nombre.");
-        return;
-      }
+      if (taskQuery.docs.isEmpty) return;
 
       await taskQuery.docs.first.reference
           .update({'isDone': !taskModel.isDone});
@@ -114,7 +111,8 @@ class UserRepositoryImpl implements UserRepository {
         'isDone': task.isDone,
       });
     } catch (e) {
-      throw Exception("Error al crear la tarea: $e");
+      log(e.toString());
+      rethrow;
     }
   }
 
@@ -127,14 +125,9 @@ class UserRepositoryImpl implements UserRepository {
           .where('id', isEqualTo: taskId)
           .get();
 
-      if (taskQuery.docs.isEmpty) {
-        log("No se encontraron tareas con ese nombre.");
-        return;
-      }
+      if (taskQuery.docs.isEmpty) return;
 
-      for (var doc in taskQuery.docs) {
-        await doc.reference.delete();
-      }
+      await taskQuery.docs.first.reference.delete();
     } catch (e) {
       log(e.toString());
       rethrow;

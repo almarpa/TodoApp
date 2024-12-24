@@ -12,10 +12,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   TaskBloc({required this.userRepository}) : super(Loading()) {
     tasksStream =
-        userRepository.tasks.listen((tasks) => add(TasksUpdatedEvent(tasks)));
+        userRepository.tasks.listen((tasks) => add(TasksLoadedEvent(tasks)));
 
     on<CheckTaskEvent>(_onTaskDone);
-    on<TasksUpdatedEvent>(_onTaskUpdated);
+    on<TasksLoadedEvent>(_onTasksUpdated);
     on<AddTaskEvent>(_onAddTask);
     on<DeleteTaskEvent>(_onDeleteTask);
   }
@@ -28,7 +28,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     }
   }
 
-  void _onTaskUpdated(TasksUpdatedEvent event, Emitter<TaskState> emit) {
+  void _onTasksUpdated(TasksLoadedEvent event, Emitter<TaskState> emit) {
     emit(TasksLoaded(event.tasks));
   }
 
