@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/app/presentation/common/dialogs.dart';
 import 'package:todo_app/app/presentation/common/validators.dart';
+import 'package:todo_app/app/presentation/screens/sign_up/bloc/sign_up_event.dart';
+import 'package:todo_app/app/presentation/screens/sign_up/bloc/sign_up_state.dart';
 import 'package:todo_app/app/presentation/theme/colors.dart';
 import 'package:todo_app/app/presentation/widgets/custom_text_button.dart';
 

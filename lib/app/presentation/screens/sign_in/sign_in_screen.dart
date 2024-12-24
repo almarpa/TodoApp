@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/app/presentation/common/dialogs.dart';
 import 'package:todo_app/app/presentation/common/validators.dart';
+import 'package:todo_app/app/presentation/screens/sign_in/bloc/sign_in_event.dart';
+import 'package:todo_app/app/presentation/screens/sign_in/bloc/sign_in_state.dart';
 import 'package:todo_app/app/presentation/widgets/custom_text_button.dart';
 
 import '../../widgets/custom_text_field.dart';
@@ -30,22 +32,31 @@ class _SignInScreenState extends State<SignInScreen> {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) {
         setState(() {
-          if (state is SignInProcess) {
-            signInProcessing = true;
-          } else if (state is SignInFailure) {
-            signInProcessing = false;
-            error = 'Usuario o contraseña incorrecto';
-          } else if (state is SignInEmailNotVerified) {
-            signInProcessing = false;
-            showAlertDialog(
+          state.when(
+            initial: () {
+              signInProcessing = false;
+            },
+            success: () {
+              signInProcessing = false;
+            },
+            failure: (message) {
+              signInProcessing = false;
+              error = 'Usuario o contraseña incorrecto';
+            },
+            process: () {
+              signInProcessing = true;
+            },
+            emailNotVerified: () {
+              signInProcessing = false;
+              showAlertDialog(
                 context,
                 "Verifica tu correo",
                 "Por favor verifica tu correo electrónico para continuar",
                 "Aceptar",
-                () => Navigator.pop(context));
-          } else {
-            signInProcessing = false;
-          }
+                () => Navigator.pop(context),
+              );
+            },
+          );
         });
       },
       child: Form(

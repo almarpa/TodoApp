@@ -10,7 +10,6 @@ import '../user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final FirebaseAuth _firebaseAuth;
-  User firebaseUser = FirebaseAuth.instance.currentUser!;
   CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('user');
 
@@ -72,7 +71,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Stream<List<TaskModel>> get tasks async* {
     yield* usersCollection
-        .doc(firebaseUser.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('tasks')
         .snapshots()
         .map(
@@ -87,7 +86,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> checkTask(TaskModel taskModel) async {
     try {
       QuerySnapshot<Map<String, dynamic>> taskQuery = await usersCollection
-          .doc(firebaseUser.uid)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('tasks')
           .where('id', isEqualTo: taskModel.uuid)
           .get();
@@ -105,7 +104,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> addTask(TaskModel task) async {
     try {
-      await usersCollection.doc(firebaseUser.uid).collection('tasks').add({
+      await usersCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('tasks')
+          .add({
         'id': task.uuid,
         'description': task.description,
         'isDone': task.isDone,
@@ -120,7 +122,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> deleteTask(String taskId) async {
     try {
       QuerySnapshot<Map<String, dynamic>> taskQuery = await usersCollection
-          .doc(firebaseUser.uid)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('tasks')
           .where('id', isEqualTo: taskId)
           .get();

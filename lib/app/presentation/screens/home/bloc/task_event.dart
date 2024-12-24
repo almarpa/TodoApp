@@ -1,34 +1,12 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:todo_app/app/domain/model/models.dart';
 
-@immutable
-sealed class TaskEvent extends Equatable {
-  const TaskEvent();
+part 'task_event.freezed.dart';
 
-  @override
-  List<Object> get props => [];
-}
-
-class CheckTaskEvent extends TaskEvent {
-  final TaskModel task;
-  const CheckTaskEvent(this.task);
-}
-
-class AddTaskEvent extends TaskEvent {
-  final TaskModel task;
-  const AddTaskEvent(this.task);
-}
-
-class TasksLoadedEvent extends TaskEvent {
-  final List<TaskModel> tasks;
-  const TasksLoadedEvent(this.tasks);
-
-  @override
-  List<Object> get props => [tasks];
-}
-
-class DeleteTaskEvent extends TaskEvent {
-  final String taskId;
-  const DeleteTaskEvent(this.taskId);
+@freezed
+class TaskEvent with _$TaskEvent {
+  factory TaskEvent.checkTask(TaskModel task) = CheckTaskEvent;
+  factory TaskEvent.addTask(TaskModel task) = AddTaskEvent;
+  factory TaskEvent.tasksLoaded(List<TaskModel> tasks) = TasksLoadedEvent;
+  factory TaskEvent.deleteTask(String taskId) = DeleteTaskEvent;
 }

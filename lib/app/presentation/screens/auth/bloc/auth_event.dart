@@ -1,14 +1,9 @@
-part of 'auth_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class AuthEvent extends Equatable {
-  const AuthEvent();
+part 'auth_event.freezed.dart';
 
-  @override
-  List<Object> get props => [];
-}
-
-class AuthUserChanged extends AuthEvent {
-  final User? user;
-
-  const AuthUserChanged(this.user);
+@freezed
+class AuthEvent with _$AuthEvent {
+  factory AuthEvent.authUserChanged(User? user) = AuthUserChanged;
 }

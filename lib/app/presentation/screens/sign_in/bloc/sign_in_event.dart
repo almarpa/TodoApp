@@ -1,20 +1,10 @@
-part of 'sign_in_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-@immutable
-sealed class SignInEvent extends Equatable {
-  const SignInEvent();
+part 'sign_in_event.freezed.dart';
 
-  @override
-  List<Object> get props => [];
-}
-
-class SignInRequired extends SignInEvent {
-  final String email;
-  final String password;
-
-  const SignInRequired(this.email, this.password);
-}
-
-class SignOutRequired extends SignInEvent {
-  const SignOutRequired();
+@freezed
+class SignInEvent with _$SignInEvent {
+  factory SignInEvent.signInRequired(String email, String password) =
+      SignInRequired;
+  factory SignInEvent.signOutRequired() = SignOutRequired;
 }

@@ -1,11 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:todo_app/app/data/repository/user_repository.dart';
-
-part 'sign_in_event.dart';
-part 'sign_in_state.dart';
+import 'package:todo_app/app/presentation/screens/sign_in/bloc/sign_in_event.dart';
+import 'package:todo_app/app/presentation/screens/sign_in/bloc/sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final UserRepository _userRepository;
@@ -21,12 +18,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         if (isEmailVerified) {
           emit(SignInSuccess());
         } else {
-          emit(SignInEmailNotVerified());
+          emit(SignInSuccessWithoutVerification());
         }
       } on FirebaseAuthException catch (e) {
         emit(SignInFailure(message: e.code));
       } catch (e) {
-        emit(const SignInFailure());
+        emit(SignInFailure());
       }
     });
     on<SignOutRequired>((event, emit) async {

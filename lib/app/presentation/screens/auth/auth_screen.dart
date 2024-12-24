@@ -63,11 +63,11 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               const Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 60.0),
+                  padding: EdgeInsets.only(top: 100.0),
                   child: Text(
-                    'I \n Have  \n   A \n     Plan',
+                    'TODO\n App',
                     style: TextStyle(
-                      fontSize: 40.0,
+                      fontSize: 60.0,
                       fontWeight: FontWeight.bold,
                       color: white,
                       letterSpacing: 5,

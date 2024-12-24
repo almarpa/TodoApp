@@ -1,23 +1,19 @@
-part of 'auth_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum AuthStatus { authenticated, unauthenticated, notVerified, unknown }
+part 'auth_state.freezed.dart';
 
-class AuthState extends Equatable {
-  const AuthState._({this.status = AuthStatus.unknown, this.user});
+@freezed
+class AuthState with _$AuthState {
+  factory AuthState.unknown() = Unknown;
+  factory AuthState.authenticated(User user) = Authenticated;
+  factory AuthState.unauthenticated() = Unauthenticated;
+  factory AuthState.notVerified() = NotVerified;
 
-  const AuthState.unknown() : this._();
+  const AuthState._();
 
-  const AuthState.authenticated(User user)
-      : this._(status: AuthStatus.authenticated, user: user);
-
-  const AuthState.unauthenticated()
-      : this._(status: AuthStatus.unauthenticated);
-
-  const AuthState.notVerified() : this._(status: AuthStatus.notVerified);
-
-  final AuthStatus status;
-  final User? user;
-
-  @override
-  List<Object?> get props => [status, user];
+  User? get user => maybeWhen(
+        authenticated: (user) => user,
+        orElse: () => null,
+      );
 }

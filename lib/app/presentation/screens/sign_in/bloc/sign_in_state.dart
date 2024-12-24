@@ -1,22 +1,12 @@
-part of 'sign_in_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-@immutable
-sealed class SignInState extends Equatable {
-  const SignInState();
+part 'sign_in_state.freezed.dart';
 
-  @override
-  List<Object> get props => [];
+@freezed
+class SignInState with _$SignInState {
+  factory SignInState.initial() = SignInInitial;
+  factory SignInState.success() = SignInSuccess;
+  factory SignInState.failure({String? message}) = SignInFailure;
+  factory SignInState.process() = SignInProcess;
+  factory SignInState.emailNotVerified() = SignInSuccessWithoutVerification;
 }
-
-class SignInInitial extends SignInState {}
-
-class SignInSuccess extends SignInState {}
-
-class SignInFailure extends SignInState {
-  final String? message;
-  const SignInFailure({this.message});
-}
-
-class SignInProcess extends SignInState {}
-
-class SignInEmailNotVerified extends SignInState {}
