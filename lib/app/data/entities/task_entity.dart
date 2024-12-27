@@ -15,7 +15,7 @@ class TaskEntity extends Equatable {
       isDone: json['isDone']);
 
   Map<String, dynamic> toJson() => {
-        'uuid': uuid,
+        'id': uuid,
         'description': description,
         'isDone': isDone,
       };
