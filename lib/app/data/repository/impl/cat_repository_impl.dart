@@ -5,11 +5,9 @@ import 'package:todo_app/app/data/repository/cat_repository.dart';
 
 @Injectable(as: CatRepository)
 class CatRepositoryImpl extends CatRepository {
-  final CatsApiClient catApiClient;
+  final CatsClient catApiClient;
 
-  CatRepositoryImpl({
-    required this.catApiClient,
-  });
+  CatRepositoryImpl(this.catApiClient);
 
   @override
   Future<Cat> oneMoreFactPlease() async {

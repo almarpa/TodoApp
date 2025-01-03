@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/app/data/repository/user_repository.dart';
+import 'package:todo_app/app/di/injector.dart';
 import 'package:todo_app/app/domain/model/task_model.dart';
 import 'package:todo_app/app/presentation/screens/home/bloc/task_bloc.dart';
 import 'package:todo_app/app/presentation/screens/home/bloc/task_event.dart';
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<TaskBloc>(
-      create: (context) => TaskBloc(userRepository: userRepository),
+      create: (context) => getIt<TaskBloc>(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),

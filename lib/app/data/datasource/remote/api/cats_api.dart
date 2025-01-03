@@ -6,7 +6,7 @@ part 'cats_api.g.dart';
 
 @RestApi(baseUrl: "https://catfact.ninja/")
 abstract class CatsApi {
-  factory CatsApi(Dio dio, {String baseUrl}) = _CatsApi;
+  factory CatsApi(Dio dio) = _CatsApi;
 
   @GET("/fact")
   Future<Cat> randomFact();

@@ -1,6 +1,3 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-@freezed
 class Cat {
   final String fact;
   final int length;

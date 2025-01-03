@@ -1,3 +1,4 @@
+import 'package:todo_app/app/di/injector.dart';
 import 'package:todo_app/app/presentation/screens/auth/bloc/auth_state.dart';
 import 'package:todo_app/app/presentation/screens/splash/splash_screen.dart';
 import 'package:todo_app/app/presentation/theme/app_theme.dart';
@@ -11,13 +12,12 @@ import 'package:todo_app/app/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'app/data/repository/user_repository.dart';
 
 class TodoApp extends StatelessWidget {
-  final UserRepository userRepository;
-  const TodoApp(this.userRepository, {super.key});
+  const TodoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<AuthBloc>(
-      create: (context) => AuthBloc(userRepository: userRepository),
+      create: (context) => AuthBloc(getIt<UserRepository>()),
       child: MaterialApp(
           title: 'Todo App',
           debugShowCheckedModeBanner: false,

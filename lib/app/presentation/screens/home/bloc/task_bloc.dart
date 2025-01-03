@@ -1,16 +1,21 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:todo_app/app/data/repository/cat_repository.dart';
 import 'package:todo_app/app/data/repository/user_repository.dart';
 import 'package:todo_app/app/domain/model/task_model.dart';
 import 'package:todo_app/app/presentation/screens/home/bloc/task_event.dart';
 import 'package:todo_app/app/presentation/screens/home/bloc/task_state.dart';
 
+@injectable
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final UserRepository userRepository;
+  final CatRepository catRepository;
   late final StreamSubscription<List<TaskModel>> tasksStream;
 
-  TaskBloc({required this.userRepository}) : super(Loading()) {
+  TaskBloc(this.catRepository, this.userRepository) : super(Loading()) {
+    
     tasksStream =
         userRepository.tasks.listen((tasks) => add(TasksLoadedEvent(tasks)));
 
