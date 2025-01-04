@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:todo_app/app/domain/model/task_model.dart';
 import 'package:todo_app/app/domain/model/user_model.dart';
 
 abstract class UserRepository {
@@ -10,10 +9,4 @@ abstract class UserRepository {
   Future<void> logOut();
   Future<void> setUserData(UserModel user);
   Future<bool> isUserEmailVerified();
-
-  Stream<List<TaskModel>> get tasks;
-
-  Future<void> checkTask(TaskModel task);
-  Future<void> addTask(TaskModel task);
-  Future<void> deleteTask(String taskId);
 }

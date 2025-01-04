@@ -4,8 +4,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todo_app/app/data/entities/task_entity.dart';
-import 'package:todo_app/app/domain/model/task_model.dart';
 import 'package:todo_app/app/domain/model/user_model.dart';
 
 import '../user_repository.dart';
@@ -13,10 +11,9 @@ import '../user_repository.dart';
 @Injectable(as: UserRepository)
 class UserRepositoryImpl implements UserRepository {
   final FirebaseAuth _firebaseAuth;
-  CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection('user');
+  final FirebaseFirestore _firestore;
 
-  UserRepositoryImpl(FirebaseAuth firebaseAuth) : _firebaseAuth = firebaseAuth;
+  UserRepositoryImpl(this._firebaseAuth, this._firestore);
 
   @override
   Stream<User?> get user =>
@@ -57,7 +54,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> setUserData(UserModel myUser) async {
     try {
-      await usersCollection.doc(myUser.id).set(myUser.toEntity().toJson());
+      await _firestore
+          .collection('user')
+          .doc(myUser.id)
+          .set(myUser.toEntity().toJson());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -67,73 +67,5 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> logOut() async {
     await _firebaseAuth.signOut();
-  }
-
-  @override
-  Stream<List<TaskModel>> get tasks async* {
-    yield* usersCollection
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('tasks')
-        .snapshots()
-        .map(
-          (snapshot) => List<TaskModel>.from(
-            snapshot.docs
-                .map((doc) => TaskEntity.fromJson(doc.data()).toModel()),
-          ),
-        );
-  }
-
-  @override
-  Future<void> checkTask(TaskModel taskModel) async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> taskQuery = await usersCollection
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('tasks')
-          .where('id', isEqualTo: taskModel.uuid)
-          .get();
-
-      if (taskQuery.docs.isEmpty) return;
-
-      await taskQuery.docs.first.reference
-          .update({'isDone': !taskModel.isDone});
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
-  }
-
-  @override
-  Future<void> addTask(TaskModel task) async {
-    try {
-      await usersCollection
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('tasks')
-          .add({
-        'id': task.uuid,
-        'description': task.description,
-        'isDone': task.isDone,
-      });
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
-  }
-
-  @override
-  Future<void> deleteTask(String taskId) async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> taskQuery = await usersCollection
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('tasks')
-          .where('id', isEqualTo: taskId)
-          .get();
-
-      if (taskQuery.docs.isEmpty) return;
-
-      await taskQuery.docs.first.reference.delete();
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
   }
 }

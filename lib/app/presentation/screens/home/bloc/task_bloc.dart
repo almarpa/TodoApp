@@ -2,22 +2,19 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todo_app/app/data/repository/cat_repository.dart';
-import 'package:todo_app/app/data/repository/user_repository.dart';
+import 'package:todo_app/app/data/repository/task_repository.dart';
 import 'package:todo_app/app/domain/model/task_model.dart';
 import 'package:todo_app/app/presentation/screens/home/bloc/task_event.dart';
 import 'package:todo_app/app/presentation/screens/home/bloc/task_state.dart';
 
 @injectable
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
-  final UserRepository userRepository;
-  final CatRepository catRepository;
+  final TaskRepository taskRepository;
   late final StreamSubscription<List<TaskModel>> tasksStream;
 
-  TaskBloc(this.catRepository, this.userRepository) : super(Loading()) {
-    
+  TaskBloc(this.taskRepository) : super(Loading()) {
     tasksStream =
-        userRepository.tasks.listen((tasks) => add(TasksLoadedEvent(tasks)));
+        taskRepository.tasks.listen((tasks) => add(TasksLoadedEvent(tasks)));
 
     on<CheckTaskEvent>(_onTaskDone);
     on<TasksLoadedEvent>(_onTasksUpdated);
@@ -27,7 +24,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   void _onTaskDone(CheckTaskEvent event, Emitter<TaskState> emit) async {
     try {
-      await userRepository.checkTask(event.task);
+      await taskRepository.checkTask(event.task);
     } catch (e) {
       emit(Error(e.toString()));
     }
@@ -39,7 +36,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   void _onAddTask(AddTaskEvent event, Emitter<TaskState> emit) async {
     try {
-      await userRepository.addTask(event.task);
+      await taskRepository.addTask(event.task);
     } catch (e) {
       emit(Error(e.toString()));
     }
@@ -47,7 +44,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   void _onDeleteTask(DeleteTaskEvent event, Emitter<TaskState> emit) async {
     try {
-      await userRepository.deleteTask(event.taskId);
+      await taskRepository.deleteTask(event.taskId);
     } catch (e) {
       emit(Error(e.toString()));
     }
