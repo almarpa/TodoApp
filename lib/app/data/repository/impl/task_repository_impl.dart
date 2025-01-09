@@ -35,7 +35,7 @@ class TaskRepositoryImpl implements TaskRepository {
           .collection('user')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('tasks')
-          .where('id', isEqualTo: taskModel.uuid)
+          .where('id', isEqualTo: taskModel.id)
           .get();
 
       if (taskQuery.docs.isEmpty) return;
@@ -56,7 +56,7 @@ class TaskRepositoryImpl implements TaskRepository {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('tasks')
           .add({
-        'id': task.uuid,
+        'id': task.id,
         'description': task.description,
         'isDone': task.isDone,
       });

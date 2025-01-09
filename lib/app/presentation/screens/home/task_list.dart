@@ -22,9 +22,9 @@ class TaskList extends StatelessWidget {
                     itemCount: tasks.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 10),
                     itemBuilder: (context, index) => Dismissible(
-                          key: Key(tasks[index].uuid),
+                          key: Key(tasks[index].id),
                           onDismissed: (direction) {
-                            onDeleteTask(tasks[index].uuid);
+                            onDeleteTask(tasks[index].id);
                           },
                           background: Container(
                             color: Theme.of(context).colorScheme.error,

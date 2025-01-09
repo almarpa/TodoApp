@@ -4,10 +4,10 @@ import 'package:todo_app/app/data/entities/cat_entity.dart';
 
 part 'cats_api.g.dart';
 
-@RestApi(baseUrl: "https://catfact.ninja/")
+@RestApi()
 abstract class CatsApi {
   factory CatsApi(Dio dio) = _CatsApi;
 
   @GET("/fact")
-  Future<Cat> randomFact();
+  Future<CatEntity> randomFact();
 }

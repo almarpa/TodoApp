@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app/app/data/repository/user_repository.dart';
 import 'package:todo_app/app/di/injector.dart';
 import 'package:todo_app/app/domain/model/task_model.dart';
 import 'package:todo_app/app/presentation/screens/home/bloc/task_bloc.dart';
@@ -14,9 +13,7 @@ import 'package:todo_app/app/presentation/theme/colors.dart';
 import '../../widgets/custom_bottom_sheet.dart';
 
 class HomeScreen extends StatelessWidget {
-  final UserRepository userRepository;
-
-  const HomeScreen(this.userRepository, {super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

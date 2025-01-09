@@ -36,7 +36,7 @@ class TodoApp extends StatelessWidget {
                 return BlocProvider(
                   create: (context) => SignInBloc(
                       userRepository: context.read<AuthBloc>().userRepository),
-                  child: HomeScreen(context.read<AuthBloc>().userRepository),
+                  child: const HomeScreen(),
                 );
               },
             );

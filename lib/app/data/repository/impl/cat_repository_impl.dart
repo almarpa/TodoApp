@@ -10,7 +10,7 @@ class CatRepositoryImpl extends CatRepository {
   CatRepositoryImpl(this.catApiClient);
 
   @override
-  Future<Cat> oneMoreFactPlease() async {
+  Future<CatEntity> oneMoreFactPlease() async {
     try {
       return await catApiClient.randomFact();
     } catch (e) {

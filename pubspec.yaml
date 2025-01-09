@@ -64,13 +64,16 @@ dependencies:
   uuid: ^4.4.2
   freezed_annotation: ^2.1.0
   equatable: ^2.0.3
-  json_annotation: ^4.3.0
+  json_annotation: ^4.9.0
   analyzer: ^5.13.0
   auto_route: ^3.2.0
+  meta: ^1.15.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  json_serializable: ^6.3.1
 
   #generate the code for networking
   retrofit_generator: '4.2.0'
