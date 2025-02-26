@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:todo_app/app/data/repository/impl/user_repository_impl.dart';
 import 'package:todo_app/app/data/repository/user_repository.dart';
 import 'package:todo_app/app/presentation/common/extensions.dart';
 import 'package:todo_app/app/presentation/screens/auth/bloc/auth_event.dart';
