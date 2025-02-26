@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_app/app/domain/model/user_model.dart';
+import 'package:todo_app/app/presentation/common/extensions.dart';
 
 import '../user_repository.dart';
 
@@ -24,8 +25,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> signIn(String email, String password) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      if (userCredential.user?.isVerified != true) logOut();
     } catch (e) {
       log(e.toString());
       rethrow;
